@@ -8,11 +8,43 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import { LanguageContext } from './context/LanguageContext';
 
+// Define the BeforeInstallPromptEvent interface
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: Array<string>;
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed',
+    platform: string,
+  }>;
+  prompt(): Promise<void>;
+}
+
+
 const App: React.FC = () => {
   const [users, setUsers] = useLocalStorage<User[]>('users', []);
   const [currentUser, setCurrentUser] = useLocalStorage<User | null>('currentUser', null);
   const [route, setRoute] = useState(window.location.hash);
   const { setLanguage } = useContext(LanguageContext);
+  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+  
+  const handleInstall = async () => {
+    if (!installPrompt) return;
+    const result = await installPrompt.prompt();
+    console.log(`Install prompt was: ${result.outcome}`);
+    setInstallPrompt(null);
+  }
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -64,7 +96,7 @@ const App: React.FC = () => {
   }
 
   if (currentUser) {
-     return <DashboardPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} />;
+     return <DashboardPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
   }
 
   let page;
@@ -76,7 +108,7 @@ const App: React.FC = () => {
       page = <RegisterPage users={users} onRegister={handleRegister} />;
       break;
     default:
-      page = <HomePage />;
+      page = <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} />;
   }
 
   return page;

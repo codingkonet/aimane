@@ -8,6 +8,8 @@ interface HeaderProps {
     user?: User;
     onLogout?: () => void;
     onUpdateUser?: (user: User) => void;
+    onInstall?: () => void;
+    showInstallButton?: boolean;
 }
 
 const PiggyBankIcon = () => (
@@ -17,7 +19,7 @@ const PiggyBankIcon = () => (
 );
 
 
-const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser }) => {
+const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall, showInstallButton }) => {
   const { language, setLanguage, t } = useContext(LanguageContext);
   
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,10 +38,15 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser }) => {
         <div className="flex items-center gap-4">
             <PiggyBankIcon />
             <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-              Mizani
+              Finta
             </h1>
         </div>
         <div className="flex items-center gap-4">
+            {showInstallButton && (
+                <button onClick={onInstall} className="bg-secondary text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors">
+                    {t('installApp')}
+                </button>
+            )}
             <select
                 value={language}
                 onChange={handleLangChange}

@@ -16,9 +16,11 @@ interface DashboardPageProps {
   user: User;
   onLogout: () => void;
   onUpdateUser: (user: User) => void;
+  onInstall: () => void;
+  showInstallButton: boolean;
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateUser }) => {
+const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateUser, onInstall, showInstallButton }) => {
   const [transactions, setTransactions] = useLocalStorage<Transaction[]>(`transactions_${user.email}`, []);
   const [budget, setBudget] = useLocalStorage<number>(`budget_${user.email}`, 2000);
   const { t } = useContext(LanguageContext);
@@ -94,7 +96,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800">
-      <Header user={user} onLogout={onLogout} onUpdateUser={onUpdateUser} />
+      <Header user={user} onLogout={onLogout} onUpdateUser={onUpdateUser} onInstall={onInstall} showInstallButton={showInstallButton} />
       <main className="container mx-auto p-4 md:p-8">
         
         <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-lg mb-8 flex flex-col md:flex-row gap-4 justify-end">

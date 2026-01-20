@@ -1,8 +1,9 @@
 
-const CACHE_NAME = 'mizani-cache-v1';
+const CACHE_NAME = 'finta-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/assets/images/finta-demo.png',
   'https://cdn.tailwindcss.com'
 ];
 
