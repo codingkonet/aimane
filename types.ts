@@ -1,4 +1,7 @@
 
+export type Language = 'en' | 'fr' | 'ar';
+export type Currency = 'USD' | 'EUR' | 'MAD';
+
 export enum TransactionType {
   INCOME = 'INCOME',
   EXPENSE = 'EXPENSE',
@@ -6,23 +9,26 @@ export enum TransactionType {
 
 export enum Category {
   // Expenses
-  FOOD = 'Food',
+  GROCERIES = 'Groceries',
+  RESTAURANTS = 'Restaurants',
   TRANSPORT = 'Transport',
-  HOUSING = 'Housing',
+  RENT_MORTGAGE = 'Rent/Mortgage',
   UTILITIES = 'Utilities',
   ENTERTAINMENT = 'Entertainment',
   HEALTH = 'Health',
   SHOPPING = 'Shopping',
   EDUCATION = 'Education',
   SAVINGS = 'Savings',
-  DEBT = 'Debt Payment',
-  OTHER_EXPENSE = 'Other',
+  DEBT_PAYMENT = 'Debt Payment',
+  OTHER_EXPENSE = 'Other Expense',
+
   // Income
   SALARY = 'Salary',
+  FREELANCE_INCOME = 'Freelance Income',
+  INVESTMENT_RETURNS = 'Investment Returns',
   BUSINESS = 'Business',
-  INVESTMENTS = 'Investments',
   GIFT = 'Gift',
-  OTHER_INCOME = 'Other',
+  OTHER_INCOME = 'Other Income',
 }
 
 export interface Transaction {
@@ -32,4 +38,12 @@ export interface Transaction {
   type: TransactionType;
   category: Category;
   date: string;
+}
+
+export interface User {
+  name: string;
+  email: string;
+  password: string; // In a real app, this should be a secure hash
+  language: Language;
+  currency: Currency;
 }

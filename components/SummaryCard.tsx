@@ -1,10 +1,15 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { Currency } from '../types';
+import { formatCurrency } from '../utils/formatting';
+import { LanguageContext } from '../context/LanguageContext';
+import { TranslationKey } from '../translations';
 
 interface SummaryCardProps {
-  title: string;
+  titleKey: TranslationKey;
   amount: number;
   type: 'income' | 'expense' | 'balance';
+  currency: Currency;
 }
 
 const typeStyles = {
@@ -25,21 +30,15 @@ const typeStyles = {
     }
 };
 
-const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    }).format(amount);
-};
-
-const SummaryCard: React.FC<SummaryCardProps> = ({ title, amount, type }) => {
+const SummaryCard: React.FC<SummaryCardProps> = ({ titleKey, amount, type, currency }) => {
   const styles = typeStyles[type];
+  const { language, t } = useContext(LanguageContext);
   
   return (
     <div className={`p-6 rounded-2xl shadow-lg transition-transform hover:scale-105 ${styles.bg}`}>
-      <h3 className="text-lg font-semibold text-slate-600">{title}</h3>
+      <h3 className="text-lg font-semibold text-slate-600">{t(titleKey)}</h3>
       <p className={`text-3xl font-bold mt-2 ${styles.text}`}>
-        {formatCurrency(amount)}
+        {formatCurrency(amount, currency, language)}
       </p>
     </div>
   );

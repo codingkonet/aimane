@@ -1,7 +1,8 @@
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Transaction, TransactionType } from '../types';
+import { LanguageContext } from '../context/LanguageContext';
 
 interface BudgetChartProps {
   transactions: Transaction[];
@@ -13,6 +14,8 @@ const COLORS = [
 ];
 
 const BudgetChart: React.FC<BudgetChartProps> = ({ transactions }) => {
+  const { t } = useContext(LanguageContext);
+
   const expenseData = useMemo(() => {
     const expenseByCategory = transactions
       .filter(t => t.type === TransactionType.EXPENSE)
@@ -26,15 +29,15 @@ const BudgetChart: React.FC<BudgetChartProps> = ({ transactions }) => {
       }, {} as { [key: string]: number });
 
     return Object.entries(expenseByCategory)
-      .map(([name, value]) => ({ name, value }))
+      .map(([name, value]) => ({ name: t(name as any), value }))
       // Fix: Explicitly convert values to numbers before sorting to prevent arithmetic errors on potentially non-number types.
       .sort((a, b) => Number(b.value) - Number(a.value));
-  }, [transactions]);
+  }, [transactions, t]);
   
   if (expenseData.length === 0) {
     return (
         <div className="flex items-center justify-center h-64 text-slate-500">
-            <p>No expense data to display.</p>
+            <p>{t('noExpenseData')}</p>
         </div>
     );
   }

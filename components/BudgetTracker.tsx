@@ -1,10 +1,14 @@
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useContext } from 'react';
+import { Currency } from '../types';
+import { formatCurrency } from '../utils/formatting';
+import { LanguageContext } from '../context/LanguageContext';
 
 interface BudgetTrackerProps {
   totalExpenses: number;
   budget: number;
   setBudget: (newBudget: number) => void;
+  currency: Currency;
 }
 
 const EditIcon: React.FC<{className?: string}> = ({className}) => (
@@ -14,9 +18,10 @@ const EditIcon: React.FC<{className?: string}> = ({className}) => (
 );
 
 
-const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, setBudget }) => {
+const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, setBudget, currency }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [newBudget, setNewBudget] = useState(budget.toString());
+    const { language, t } = useContext(LanguageContext);
 
     const percentage = budget > 0 ? Math.min((totalExpenses / budget) * 100, 100) : 0;
     const remaining = budget - totalExpenses;
@@ -30,20 +35,20 @@ const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, se
             setIsEditing(false);
         }
     };
-    
-    const formatCurrency = (amount: number) => {
-      return new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-      }).format(amount);
-    };
+
+    const localFormatCurrency = (amount: number) => {
+        return new Intl.NumberFormat(language === 'ar' ? 'ar-MA' : language === 'fr' ? 'fr-FR' : 'en-US', {
+            style: 'currency',
+            currency: currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(amount);
+    }
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-lg">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold text-slate-700">Monthly Budget</h2>
+                <h2 className="text-2xl font-bold text-slate-700">{t('monthlyBudget')}</h2>
                 {!isEditing && (
                     <button onClick={() => setIsEditing(true)} className="text-slate-500 hover:text-primary transition">
                          <EditIcon className="w-5 h-5" />
@@ -58,16 +63,16 @@ const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, se
                         value={newBudget}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setNewBudget(e.target.value)}
                         className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-                        placeholder="Enter new budget"
+                        placeholder={t('monthlyBudget')}
                     />
-                    <button onClick={handleSave} className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">Save</button>
-                    <button onClick={() => setIsEditing(false)} className="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition">Cancel</button>
+                    <button onClick={handleSave} className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">{t('save')}</button>
+                    <button onClick={() => setIsEditing(false)} className="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition">{t('cancel')}</button>
                 </div>
             ) : (
                 <div>
                     <div className="flex justify-between items-baseline mb-2">
-                        <span className="text-3xl font-bold text-slate-800">{formatCurrency(totalExpenses)}</span>
-                        <span className="text-slate-500">of {formatCurrency(budget)}</span>
+                        <span className="text-3xl font-bold text-slate-800">{formatCurrency(totalExpenses, currency, language)}</span>
+                        <span className="text-slate-500">{t('of')} {localFormatCurrency(budget)}</span>
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
                         <div
@@ -77,7 +82,7 @@ const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, se
                     </div>
                      <div className="text-right mt-2 font-medium">
                         <span className={remaining >= 0 ? 'text-slate-600' : 'text-red-600'}>
-                            {formatCurrency(remaining)} {remaining >= 0 ? 'left' : 'overspent'}
+                            {localFormatCurrency(Math.abs(remaining))} {remaining >= 0 ? t('left') : t('overspent')}
                         </span>
                     </div>
                 </div>

@@ -1,5 +1,11 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
+import { Language } from '../types';
+
+interface HeaderProps {
+    onLogout?: () => void;
+}
 
 const PiggyBankIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 24 24" fill="currentColor">
@@ -8,14 +14,41 @@ const PiggyBankIcon = () => (
 );
 
 
-const Header: React.FC = () => {
+const Header: React.FC<HeaderProps> = ({ onLogout }) => {
+  const { language, setLanguage, t } = useContext(LanguageContext);
+  
+  const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value as Language);
+  }
+
   return (
     <header className="bg-primary shadow-md">
-      <div className="container mx-auto px-4 md:px-8 py-4 flex items-center gap-4">
-        <PiggyBankIcon />
-        <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-          Budget Manager Pro
-        </h1>
+      <div className="container mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+            <PiggyBankIcon />
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+              Mizani
+            </h1>
+        </div>
+        <div className="flex items-center gap-4">
+            <select
+                value={language}
+                onChange={handleLangChange}
+                className="bg-white text-slate-700 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none"
+            >
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+            </select>
+            {onLogout && (
+                <button
+                    onClick={onLogout}
+                    className="bg-white text-primary font-semibold py-2 px-4 rounded-lg hover:bg-slate-200 transition-colors"
+                >
+                    {t('logout')}
+                </button>
+            )}
+        </div>
       </div>
     </header>
   );
