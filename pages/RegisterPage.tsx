@@ -29,38 +29,38 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ users, onRegister }) => {
             setError(t('registerError'));
             return;
         }
-        onRegister({ name, email, password, language, currency: 'USD' });
+        onRegister({ name, email, password, language, currency: 'USD', theme: 'light' });
     };
 
     return (
-        <div className="min-h-screen bg-slate-100 flex flex-col">
+        <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex flex-col">
             <Header />
             <div className="flex-grow flex flex-col justify-center items-center p-4">
                 <div className="max-w-md w-full mx-auto">
                     <div className="text-center mb-8 flex flex-col items-center">
                         <PiggyBankIcon />
-                        <h1 className="text-3xl font-bold text-slate-800 mt-2">{t('registerTitle')}</h1>
-                        <p className="text-slate-500">{t('registerSubtitle')}</p>
+                        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mt-2">{t('registerTitle')}</h1>
+                        <p className="text-slate-500 dark:text-slate-400">{t('registerSubtitle')}</p>
                     </div>
-                    <div className="bg-white p-8 rounded-2xl shadow-lg">
+                    <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-slate-700">{t('nameLabel')}</label>
-                                <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+                                <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t('nameLabel')}</label>
+                                <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
                             </div>
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-slate-700">{t('emailLabel')}</label>
-                                <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+                                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t('emailLabel')}</label>
+                                <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
                             </div>
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-slate-700">{t('passwordLabel')}</label>
-                                <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+                                <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t('passwordLabel')}</label>
+                                <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
                             </div>
                             {error && <p className="text-red-500 text-sm">{error}</p>}
                             <button type="submit" className="w-full bg-primary text-white py-3 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors duration-300">
                                 {t('createAccountButton')}
                             </button>
-                            <p className="text-center text-sm text-slate-600">
+                            <p className="text-center text-sm text-slate-600 dark:text-slate-400">
                                 {t('hasAccount')} <a href="#/login" className="font-medium text-primary hover:underline">{t('loginHere')}</a>
                             </p>
                         </form>

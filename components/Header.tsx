@@ -1,10 +1,13 @@
 
 import React, { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
-import { Language } from '../types';
+import { Language, User } from '../types';
+import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
+    user?: User;
     onLogout?: () => void;
+    onUpdateUser?: (user: User) => void;
 }
 
 const PiggyBankIcon = () => (
@@ -14,11 +17,17 @@ const PiggyBankIcon = () => (
 );
 
 
-const Header: React.FC<HeaderProps> = ({ onLogout }) => {
+const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser }) => {
   const { language, setLanguage, t } = useContext(LanguageContext);
   
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLanguage(e.target.value as Language);
+  }
+  
+  const handleThemeToggle = () => {
+    if (user && onUpdateUser) {
+        onUpdateUser({ ...user, theme: user.theme === 'light' ? 'dark' : 'light' });
+    }
   }
 
   return (
@@ -34,16 +43,17 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
             <select
                 value={language}
                 onChange={handleLangChange}
-                className="bg-white text-slate-700 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none"
+                className="bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none"
             >
                 <option value="en">English</option>
                 <option value="fr">Français</option>
                 <option value="ar">العربية</option>
             </select>
+            {user && onUpdateUser && <ThemeToggle theme={user.theme} onToggle={handleThemeToggle} />}
             {onLogout && (
                 <button
                     onClick={onLogout}
-                    className="bg-white text-primary font-semibold py-2 px-4 rounded-lg hover:bg-slate-200 transition-colors"
+                    className="bg-white text-primary font-semibold py-2 px-4 rounded-lg hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 transition-colors"
                 >
                     {t('logout')}
                 </button>

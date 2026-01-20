@@ -1,11 +1,14 @@
 
 import React, { useMemo, useContext } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Transaction, TransactionType } from '../types';
+import { Transaction, TransactionType, Currency, User } from '../types';
 import { LanguageContext } from '../context/LanguageContext';
+import { formatCurrency } from '../utils/formatting';
 
 interface BudgetChartProps {
   transactions: Transaction[];
+  currency: Currency;
+  theme: User['theme'];
 }
 
 const COLORS = [
@@ -13,8 +16,9 @@ const COLORS = [
   '#FF19A3', '#19D4FF', '#FFD419', '#19FF5A', '#A319FF'
 ];
 
-const BudgetChart: React.FC<BudgetChartProps> = ({ transactions }) => {
-  const { t } = useContext(LanguageContext);
+const BudgetChart: React.FC<BudgetChartProps> = ({ transactions, currency, theme }) => {
+  const { language, t } = useContext(LanguageContext);
+  const isDark = theme === 'dark';
 
   const expenseData = useMemo(() => {
     const expenseByCategory = transactions
@@ -30,13 +34,12 @@ const BudgetChart: React.FC<BudgetChartProps> = ({ transactions }) => {
 
     return Object.entries(expenseByCategory)
       .map(([name, value]) => ({ name: t(name as any), value }))
-      // Fix: Explicitly convert values to numbers before sorting to prevent arithmetic errors on potentially non-number types.
       .sort((a, b) => Number(b.value) - Number(a.value));
   }, [transactions, t]);
   
   if (expenseData.length === 0) {
     return (
-        <div className="flex items-center justify-center h-64 text-slate-500">
+        <div className="flex items-center justify-center h-64 text-slate-500 dark:text-slate-400">
             <p>{t('noExpenseData')}</p>
         </div>
     );
@@ -60,8 +63,14 @@ const BudgetChart: React.FC<BudgetChartProps> = ({ transactions }) => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
-                <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
-                <Legend />
+                <Tooltip 
+                    formatter={(value: number) => formatCurrency(value, currency, language)}
+                    contentStyle={{ 
+                        backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                        borderColor: isDark ? '#334155' : '#e2e8f0'
+                    }}
+                 />
+                <Legend wrapperStyle={{ color: isDark ? '#cbd5e1' : '#334155' }} />
             </PieChart>
         </ResponsiveContainer>
     </div>

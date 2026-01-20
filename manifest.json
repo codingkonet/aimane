@@ -1,0 +1,24 @@
+
+{
+  "name": "Mizani",
+  "short_name": "Mizani",
+  "description": "A sleek, multilingual, and multi-currency application to manage your personal finances, track income and expenses, set budget goals, and visualize your spending habits.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

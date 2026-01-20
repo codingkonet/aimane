@@ -12,15 +12,15 @@ const PiggyBankIcon = () => (
 const HomePage: React.FC = () => {
   const { t } = useContext(LanguageContext);
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex flex-col">
         <Header />
         <div className="flex-grow flex flex-col justify-center items-center text-center p-4">
             <div className="max-w-2xl">
                 <PiggyBankIcon />
-                <h1 className="text-5xl font-extrabold text-slate-800 mt-4">
+                <h1 className="text-5xl font-extrabold text-slate-800 dark:text-slate-100 mt-4">
                 {t('homeWelcome')}
                 </h1>
-                <p className="text-slate-600 text-lg mt-4">
+                <p className="text-slate-600 dark:text-slate-400 text-lg mt-4">
                 {t('homeSubtitle')}
                 </p>
                 <div className="mt-8 flex justify-center gap-4">
@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
                 </a>
                 <a
                     href="#/register"
-                    className="bg-white text-primary font-semibold py-3 px-8 rounded-lg text-lg hover:bg-slate-200 transition-colors duration-300 shadow-lg"
+                    className="bg-white text-primary font-semibold py-3 px-8 rounded-lg text-lg hover:bg-slate-200 dark:bg-slate-200 dark:hover:bg-slate-300 dark:text-primary transition-colors duration-300 shadow-lg"
                 >
                     {t('register')}
                 </a>

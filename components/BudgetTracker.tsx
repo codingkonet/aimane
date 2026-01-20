@@ -46,11 +46,11 @@ const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, se
     }
 
     return (
-        <div className="bg-white p-6 rounded-2xl shadow-lg">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold text-slate-700">{t('monthlyBudget')}</h2>
+                <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200">{t('monthlyBudget')}</h2>
                 {!isEditing && (
-                    <button onClick={() => setIsEditing(true)} className="text-slate-500 hover:text-primary transition">
+                    <button onClick={() => setIsEditing(true)} className="text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition">
                          <EditIcon className="w-5 h-5" />
                     </button>
                 )}
@@ -62,26 +62,26 @@ const BudgetTracker: React.FC<BudgetTrackerProps> = ({ totalExpenses, budget, se
                         type="number"
                         value={newBudget}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setNewBudget(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                         placeholder={t('monthlyBudget')}
                     />
                     <button onClick={handleSave} className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">{t('save')}</button>
-                    <button onClick={() => setIsEditing(false)} className="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition">{t('cancel')}</button>
+                    <button onClick={() => setIsEditing(false)} className="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500 transition">{t('cancel')}</button>
                 </div>
             ) : (
                 <div>
                     <div className="flex justify-between items-baseline mb-2">
-                        <span className="text-3xl font-bold text-slate-800">{formatCurrency(totalExpenses, currency, language)}</span>
-                        <span className="text-slate-500">{t('of')} {localFormatCurrency(budget)}</span>
+                        <span className="text-3xl font-bold text-slate-800 dark:text-slate-100">{formatCurrency(totalExpenses, currency, language)}</span>
+                        <span className="text-slate-500 dark:text-slate-400">{t('of')} {localFormatCurrency(budget)}</span>
                     </div>
-                    <div className="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
+                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-4 overflow-hidden">
                         <div
                             className={`h-4 rounded-full transition-all duration-500 ${progressBarColor}`}
                             style={{ width: `${percentage}%` }}
                         ></div>
                     </div>
                      <div className="text-right mt-2 font-medium">
-                        <span className={remaining >= 0 ? 'text-slate-600' : 'text-red-600'}>
+                        <span className={remaining >= 0 ? 'text-slate-600 dark:text-slate-300' : 'text-red-600 dark:text-red-400'}>
                             {localFormatCurrency(Math.abs(remaining))} {remaining >= 0 ? t('left') : t('overspent')}
                         </span>
                     </div>

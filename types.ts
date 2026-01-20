@@ -1,6 +1,7 @@
 
 export type Language = 'en' | 'fr' | 'ar';
 export type Currency = 'USD' | 'EUR' | 'MAD';
+export type Theme = 'light' | 'dark';
 
 export enum TransactionType {
   INCOME = 'INCOME',
@@ -46,4 +47,5 @@ export interface User {
   password: string; // In a real app, this should be a secure hash
   language: Language;
   currency: Currency;
+  theme: Theme;
 }

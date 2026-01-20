@@ -49,26 +49,26 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction }) =
   const categories = type === TransactionType.INCOME ? incomeCategories : expenseCategories;
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold text-slate-700 mb-4">{t('addTransaction')}</h2>
+    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+      <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200 mb-4">{t('addTransaction')}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <div className="flex rounded-lg border border-slate-300 p-1">
-            <button type="button" onClick={() => handleTypeChange(TransactionType.EXPENSE)} className={`w-1/2 p-2 rounded-md font-semibold transition ${type === TransactionType.EXPENSE ? 'bg-red-500 text-white' : 'text-slate-600'}`}>{t('expense')}</button>
-            <button type="button" onClick={() => handleTypeChange(TransactionType.INCOME)} className={`w-1/2 p-2 rounded-md font-semibold transition ${type === TransactionType.INCOME ? 'bg-emerald-500 text-white' : 'text-slate-600'}`}>{t('income')}</button>
+          <div className="flex rounded-lg border border-slate-300 dark:border-slate-600 p-1">
+            <button type="button" onClick={() => handleTypeChange(TransactionType.EXPENSE)} className={`w-1/2 p-2 rounded-md font-semibold transition ${type === TransactionType.EXPENSE ? 'bg-red-500 text-white' : 'text-slate-600 dark:text-slate-300'}`}>{t('expense')}</button>
+            <button type="button" onClick={() => handleTypeChange(TransactionType.INCOME)} className={`w-1/2 p-2 rounded-md font-semibold transition ${type === TransactionType.INCOME ? 'bg-emerald-500 text-white' : 'text-slate-600 dark:text-slate-300'}`}>{t('income')}</button>
           </div>
         </div>
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-slate-600 mb-1">{t('description')}</label>
-          <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" placeholder={t('category_Groceries')} />
+          <label htmlFor="description" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{t('description')}</label>
+          <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder={t('category_Groceries')} />
         </div>
         <div>
-          <label htmlFor="amount" className="block text-sm font-medium text-slate-600 mb-1">{t('amount')}</label>
-          <input type="number" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" placeholder="0.00" />
+          <label htmlFor="amount" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{t('amount')}</label>
+          <input type="number" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="0.00" />
         </div>
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-slate-600 mb-1">{t('category')}</label>
-          <select id="category" value={category} onChange={(e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value as Category)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none bg-white">
+          <label htmlFor="category" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{t('category')}</label>
+          <select id="category" value={category} onChange={(e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value as Category)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-white">
             {categories.map(cat => (
               <option key={cat} value={cat}>{t(cat as any)}</option>
             ))}

@@ -1,11 +1,14 @@
 
 import React, { useContext } from 'react';
-import { Transaction, TransactionType } from '../types';
+import { Transaction, TransactionType, Currency } from '../types';
 import { LanguageContext } from '../context/LanguageContext';
+import { formatCurrency } from '../utils/formatting';
 
 interface TransactionListProps {
   transactions: Transaction[];
   onDeleteTransaction: (id: string) => void;
+  currency: Currency;
+  isFiltered: boolean;
 }
 
 const TrashIcon: React.FC<{className?: string}> = ({className}) => (
@@ -15,12 +18,11 @@ const TrashIcon: React.FC<{className?: string}> = ({className}) => (
 );
 
 
-const TransactionItem: React.FC<{transaction: Transaction; onDelete: (id: string) => void}> = ({ transaction, onDelete }) => {
+const TransactionItem: React.FC<{transaction: Transaction; onDelete: (id: string) => void, currency: Currency}> = ({ transaction, onDelete, currency }) => {
     const { language, t } = useContext(LanguageContext);
     const isIncome = transaction.type === TransactionType.INCOME;
-    const amountColor = isIncome ? 'text-emerald-500' : 'text-red-500';
-    const sign = isIncome ? '+' : '-';
-
+    const amountColor = isIncome ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400';
+    
     const formatDate = (dateString: string) => {
         const locale = language === 'ar' ? 'ar-MA' : language === 'fr' ? 'fr-CA' : 'en-US';
         return new Date(dateString).toLocaleDateString(locale, {
@@ -30,20 +32,24 @@ const TransactionItem: React.FC<{transaction: Transaction; onDelete: (id: string
         });
     }
 
+    const formattedAmount = isIncome 
+        ? `+${formatCurrency(transaction.amount, currency, language)}`
+        : formatCurrency(-transaction.amount, currency, language);
+
     return (
-        <li className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <li className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
                 <div className={`w-2 h-10 rounded-full ${isIncome ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
                 <div>
-                    <p className="font-bold text-slate-800">{transaction.description}</p>
-                    <p className="text-sm text-slate-500">{t(transaction.category as any)} &bull; {formatDate(transaction.date)}</p>
+                    <p className="font-bold text-slate-800 dark:text-slate-200">{transaction.description}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{t(transaction.category as any)} &bull; {formatDate(transaction.date)}</p>
                 </div>
             </div>
             <div className="flex items-center gap-4">
                 <p className={`font-bold text-lg ${amountColor}`}>
-                    {sign}${transaction.amount.toFixed(2)}
+                    {formattedAmount}
                 </p>
-                <button onClick={() => onDelete(transaction.id)} className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50">
+                <button onClick={() => onDelete(transaction.id)} className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-slate-700">
                     <TrashIcon className="w-5 h-5" />
                 </button>
             </div>
@@ -52,17 +58,19 @@ const TransactionItem: React.FC<{transaction: Transaction; onDelete: (id: string
 };
 
 
-const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction }) => {
+const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction, currency, isFiltered }) => {
   const { t } = useContext(LanguageContext);
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold text-slate-700 mb-4">{t('recentTransactions')}</h2>
+    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+      <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200 mb-4">{t('recentTransactions')}</h2>
       {transactions.length === 0 ? (
-        <p className="text-center text-slate-500 py-8">{t('noTransactions')}</p>
+        <p className="text-center text-slate-500 dark:text-slate-400 py-8">
+            {isFiltered ? t('noMatchingTransactions') : t('noTransactions')}
+        </p>
       ) : (
         <ul className="space-y-3">
           {transactions.map(transaction => (
-            <TransactionItem key={transaction.id} transaction={transaction} onDelete={onDeleteTransaction} />
+            <TransactionItem key={transaction.id} transaction={transaction} onDelete={onDeleteTransaction} currency={currency} />
           ))}
         </ul>
       )}
