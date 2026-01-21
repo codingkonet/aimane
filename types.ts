@@ -49,3 +49,23 @@ export interface User {
   currency: Currency;
   theme: Theme;
 }
+
+export interface Comment {
+  id: string;
+  authorEmail: string;
+  authorName: string;
+  content: string;
+  date: string;
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  content: string;
+  authorEmail: string;
+  authorName: string;
+  category: string;
+  date: string;
+  comments: Comment[];
+  likes: string[]; // List of user emails who liked
+}

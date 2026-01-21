@@ -6,7 +6,12 @@ import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import BlogPage from './pages/BlogPage';
+import CreateArticlePage from './pages/CreateArticlePage';
+import ArticleDetailPage from './pages/ArticleDetailPage';
 import { LanguageContext } from './context/LanguageContext';
+import PWAInstaller from './components/PWAInstaller';
 
 // Define the BeforeInstallPromptEvent interface
 interface BeforeInstallPromptEvent extends Event {
@@ -95,23 +100,44 @@ const App: React.FC = () => {
     }
   }
 
-  if (currentUser) {
-     return <DashboardPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
-  }
+  const renderPage = () => {
+    if (currentUser) {
+       if (route === '#/admin' && currentUser.email === 'hello@ouaglabs.com') {
+         return <AdminDashboardPage user={currentUser} users={users} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+       }
 
-  let page;
-  switch (route) {
-    case '#/login':
-      page = <LoginPage users={users} onLogin={handleLogin} />;
-      break;
-    case '#/register':
-      page = <RegisterPage users={users} onRegister={handleRegister} />;
-      break;
-    default:
-      page = <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} />;
-  }
+       if (route === '#/blog') {
+         return <BlogPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+       }
 
-  return page;
+       if (route === '#/blog/create') {
+         return <CreateArticlePage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+       }
+
+       if (route.startsWith('#/blog/post/')) {
+         const id = route.split('/').pop() || '';
+         return <ArticleDetailPage id={id} user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+       }
+
+       return <DashboardPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+    }
+
+    switch (route) {
+      case '#/login':
+        return <LoginPage users={users} onLogin={handleLogin} />;
+      case '#/register':
+        return <RegisterPage users={users} onRegister={handleRegister} />;
+      default:
+        return <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+    }
+  };
+
+  return (
+    <>
+      {renderPage()}
+      <PWAInstaller onInstall={handleInstall} showInstallButton={!!installPrompt} />
+    </>
+  );
 };
 
 export default App;

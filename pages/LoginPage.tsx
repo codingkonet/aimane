@@ -9,9 +9,11 @@ interface LoginPageProps {
     onLogin: (user: User) => void;
 }
 
-const PiggyBankIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-primary" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.883 8.05C18.232 5.025 15.42.925 12.015 2.05c-2.733.901-4.28 3.208-4.998 5.42C3.172 7.82.25 10.66.25 14.125c0 3.313 2.686 6 6 6h11.5c3.038 0 5.5-2.463 5.5-5.5 0-2.954-2.33-5.367-5.25-5.492l-.117-.008zM10.5 12.125c-.414 0-.75.336-.75.75s.336.75.75.75.75-.336.75-.75-.336-.75-.75-.75zm-1-3.5h5v-1h-5v1z" />
+const FintaLogoLarge = () => (
+    <svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary drop-shadow-xl">
+        <rect width="40" height="40" rx="12" fill="currentColor" fillOpacity="0.1" />
+        <path d="M12 10H28V14H16V18H26V22H16V30H12V10Z" fill="currentColor" />
+        <path d="M22 24H28V30H22V24Z" fill="#10b981" />
     </svg>
 );
 
@@ -34,31 +36,31 @@ const LoginPage: React.FC<LoginPageProps> = ({ users, onLogin }) => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex flex-col">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
             <Header />
             <div className="flex-grow flex flex-col justify-center items-center p-4">
                 <div className="max-w-md w-full mx-auto">
                     <div className="text-center mb-8 flex flex-col items-center">
-                        <PiggyBankIcon />
-                        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mt-2">{t('loginWelcome')}</h1>
-                        <p className="text-slate-500 dark:text-slate-400">{t('loginSubtitle')}</p>
+                        <FintaLogoLarge />
+                        <h1 className="text-4xl font-black text-slate-900 dark:text-slate-100 mt-4 tracking-tight">{t('loginWelcome')}</h1>
+                        <p className="text-slate-500 dark:text-slate-400 mt-2">{t('loginSubtitle')}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
+                    <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t('emailLabel')}</label>
-                                <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
+                                <label htmlFor="email" className="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">{t('emailLabel')}</label>
+                                <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-2 w-full px-4 py-3 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all" />
                             </div>
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t('passwordLabel')}</label>
-                                <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
+                                <label htmlFor="password" className="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">{t('passwordLabel')}</label>
+                                <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-2 w-full px-4 py-3 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all" />
                             </div>
-                            {error && <p className="text-red-500 text-sm">{error}</p>}
-                            <button type="submit" className="w-full bg-primary text-white py-3 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors duration-300">
+                            {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
+                            <button type="submit" className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-95">
                                 {t('login')}
                             </button>
                             <p className="text-center text-sm text-slate-600 dark:text-slate-400">
-                                {t('noAccount')} <a href="#/register" className="font-medium text-primary hover:underline">{t('registerHere')}</a>
+                                {t('noAccount')} <a href="#/register" className="font-bold text-primary hover:underline">{t('registerHere')}</a>
                             </p>
                         </form>
                     </div>

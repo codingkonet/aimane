@@ -25,6 +25,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
   const [budget, setBudget] = useLocalStorage<number>(`budget_${user.email}`, 2000);
   const { t } = useContext(LanguageContext);
 
+  const isAdmin = user.email === 'hello@ouaglabs.com';
+
   // Filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -99,22 +101,40 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
       <Header user={user} onLogout={onLogout} onUpdateUser={onUpdateUser} onInstall={onInstall} showInstallButton={showInstallButton} />
       <main className="container mx-auto p-4 md:p-8">
         
-        <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-lg mb-8 flex flex-col md:flex-row gap-4 justify-end">
-            <div className="flex items-center gap-2">
-                <label htmlFor="language-select" className="font-semibold text-slate-600 dark:text-slate-300">{t('language')}:</label>
-                <select id="language-select" value={user.language} onChange={handleLanguageChange} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none">
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="ar">العربية</option>
-                </select>
+        <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-lg mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex gap-4">
+                {isAdmin && (
+                    <button 
+                        onClick={() => window.location.hash = '/admin'}
+                        className="bg-amber-500 text-white font-bold py-2 px-6 rounded-xl hover:bg-amber-600 transition-all shadow-lg shadow-amber-500/20 active:scale-95 flex items-center gap-2"
+                    >
+                        <AdminIcon /> {t('adminPanel')}
+                    </button>
+                )}
+                <button 
+                    onClick={() => window.location.hash = '/blog'}
+                    className="bg-primary text-white font-bold py-2 px-6 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-primary/20 active:scale-95 flex items-center gap-2"
+                >
+                    <BlogIcon /> {t('community')}
+                </button>
             </div>
-            <div className="flex items-center gap-2">
-                <label htmlFor="currency-select" className="font-semibold text-slate-600 dark:text-slate-300">{t('currency')}:</label>
-                <select id="currency-select" value={user.currency} onChange={handleCurrencyChange} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="MAD">MAD (DH)</option>
-                </select>
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="flex items-center gap-2">
+                    <label htmlFor="language-select" className="font-semibold text-slate-600 dark:text-slate-300">{t('language')}:</label>
+                    <select id="language-select" value={user.language} onChange={handleLanguageChange} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <div className="flex items-center gap-2">
+                    <label htmlFor="currency-select" className="font-semibold text-slate-600 dark:text-slate-300">{t('currency')}:</label>
+                    <select id="currency-select" value={user.currency} onChange={handleCurrencyChange} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold py-2 px-3 rounded-lg border-2 border-transparent focus:border-primary focus:outline-none">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="MAD">MAD (DH)</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -157,5 +177,17 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
     </div>
   );
 };
+
+const AdminIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    </svg>
+);
+
+const BlogIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+    </svg>
+);
 
 export default DashboardPage;
