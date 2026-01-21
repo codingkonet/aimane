@@ -1,24 +1,57 @@
 
 {
-  "name": "Finta",
-  "short_name": "Finta",
-  "description": "A sleek, multilingual, and multi-currency application to manage your personal finances, track income and expenses, set budget goals, and visualize your spending habits.",
-  "start_url": ".",
+  "name": "Finta CLOUD Finance Manager",
+  "short_name": "Finta CLOUD",
+  "id": "fintacloud-app-v1",
+  "description": "Smart, multilingual budget manager by A.OUAG. Track expenses, manage income, and visualize your wealth.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
+  "display_override": ["window-controls-overlay", "minimal-ui"],
+  "background_color": "#4f46e5",
   "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "categories": ["finance", "productivity"],
   "icons": [
     {
       "src": "/assets/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Transaction",
+      "short_name": "Add",
+      "description": "Add a new expense or income",
+      "url": "/#/dashboard",
+      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Community Blog",
+      "short_name": "Blog",
+      "description": "Read financial tips",
+      "url": "/#/blog",
+      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }

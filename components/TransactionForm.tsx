@@ -60,7 +60,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction }) =
         </div>
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{t('description')}</label>
-          <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder={t('category_Groceries')} />
+          {/* FIX: Use a valid translation key for the placeholder. `Category.GROCERIES` is a valid key. */}
+          <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder={t(Category.GROCERIES)} />
         </div>
         <div>
           <label htmlFor="amount" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{t('amount')}</label>

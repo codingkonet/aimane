@@ -33,11 +33,20 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
+      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
+      // Stash the event so it can be triggered later.
       setInstallPrompt(e as BeforeInstallPromptEvent);
+      console.log('Install prompt captured');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Listen for the appinstalled event
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was installed');
+      setInstallPrompt(null);
+    });
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -46,8 +55,12 @@ const App: React.FC = () => {
   
   const handleInstall = async () => {
     if (!installPrompt) return;
-    const result = await installPrompt.prompt();
-    console.log(`Install prompt was: ${result.outcome}`);
+    // Show the install prompt
+    await installPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    const { outcome } = await installPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    // We've used the prompt, and can't use it again, throw it away
     setInstallPrompt(null);
   }
 

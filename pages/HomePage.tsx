@@ -148,7 +148,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => 
                                         <div className="w-3 h-3 bg-red-500/80 rounded-full"></div>
                                         <div className="w-3 h-3 bg-yellow-400/80 rounded-full"></div>
                                         <div className="w-3 h-3 bg-green-500/80 rounded-full"></div>
-                                        <div className="ml-4 bg-slate-600/50 px-4 py-1 rounded text-[10px] text-slate-400 font-mono">app.finta.io</div>
+                                        <div className="ml-4 bg-slate-600/50 px-4 py-1 rounded text-[10px] text-slate-400 font-mono">app.fintacloud.io</div>
                                     </div>
                                     <div className="p-2 bg-slate-800">
                                         <div className="aspect-video bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700">

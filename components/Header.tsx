@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
         >
             <FintaLogo />
             <h1 className="text-xl md:text-3xl font-black text-white tracking-tighter">
-              Finta
+              Finta CLOUD
             </h1>
         </div>
         <div className="flex items-center gap-2 md:gap-4">
