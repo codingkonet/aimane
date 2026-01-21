@@ -12,7 +12,7 @@ interface HeaderProps {
     showInstallButton?: boolean;
 }
 
-const FintaLogo = () => (
+const AppLogo = () => (
     <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white drop-shadow-sm md:w-10 md:h-10">
         <rect width="40" height="40" rx="12" fill="white" fillOpacity="0.2" />
         <path d="M12 10H28V14H16V18H26V22H16V30H12V10Z" fill="white" />
@@ -45,9 +45,9 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
           onClick={navigateToHome}
           className="flex items-center gap-2 md:gap-3 cursor-pointer group hover:opacity-90 transition-all"
         >
-            <FintaLogo />
+            <AppLogo />
             <h1 className="text-xl md:text-3xl font-black text-white tracking-tighter">
-              Finta CLOUD
+              KoinCLICK
             </h1>
         </div>
         <div className="flex items-center gap-2 md:gap-4">

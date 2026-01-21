@@ -12,7 +12,7 @@ const translationStrings = {
     installNow: { en: 'Install Now', fr: 'Installer', ar: 'تثبيت الآن' },
     getStarted: { en: 'Get Started', fr: 'Commencer', ar: 'ابدأ الآن' },
     installApp: { en: 'Install', fr: 'Installer', ar: 'تثبيت' },
-    copyright: { en: '© 2024 Finta CLOUD. All rights reserved.', fr: '© 2024 Finta CLOUD. Tous droits réservés.', ar: '© 2024 Finta CLOUD. جميع الحقوق محفوظة.' },
+    copyright: { en: '© 2024 KoinCLICK. All rights reserved.', fr: '© 2024 KoinCLICK. Tous droits réservés.', ar: '© 2024 KoinCLICK. جميع الحقوق محفوظة.' },
     // Data Management
     exportData: { en: 'Export Data', fr: 'Exporter les données', ar: 'تصدير البيانات' },
     importData: { en: 'Import Data', fr: 'Importer des données', ar: 'استيراد البيانات' },
@@ -32,14 +32,14 @@ const translationStrings = {
     noArticles: { en: 'No articles yet. Be the first to share!', fr: 'Aucun article pour le moment. Soyez le premier à partager !', ar: 'لا توجد مقالات بعد. كن أول من يشارك!' },
     backToBlog: { en: 'Back to Blog', fr: 'Retour au Blog', ar: 'العودة للمدونة' },
     // PWA Banner
-    pwaBannerTitle: { en: 'Install Finta CLOUD App', fr: 'Installer l\'appli Finta CLOUD', ar: 'تثبيت تطبيق Finta CLOUD' },
+    pwaBannerTitle: { en: 'Install KoinCLICK App', fr: 'Installer l\'appli KoinCLICK', ar: 'تثبيت تطبيق KoinCLICK' },
     pwaAndroidInstructions: { en: 'Add to home screen for a better experience and offline access.', fr: 'Ajoutez à l\'écran d\'accueil pour une meilleure expérience.', ar: 'أضفه إلى الشاشة الرئيسية للحصول على تجربة أفضل.' },
     pwaIOSInstructions: { en: 'Tap the share button and select "Add to Home Screen".', fr: 'Appuyez sur "Partager" puis sur "Sur l\'écran d\'accueil".', ar: 'اضغط على زر المشاركة واختر "إضافة إلى الشاشة الرئيسية".' },
     // Home Page
-    homeWelcome: { en: 'Welcome to Finta CLOUD', fr: 'Bienvenue sur Finta CLOUD', ar: 'مرحباً بك في Finta CLOUD' },
+    homeWelcome: { en: 'Welcome to KoinCLICK', fr: 'Bienvenue sur KoinCLICK', ar: 'مرحباً بك في KoinCLICK' },
     homeTitle: { en: 'Master Your Money, Simply.', fr: 'Maîtrisez votre argent, simplement.', ar: 'تحكم في أموالك ببساطة.' },
     homeSubtitle: { en: 'Your personal finance companion. Take control of your money by tracking your income, managing expenses, and visualizing your spending habits.', fr: 'Votre compagnon financier personnel. Prenez le contrôle de votre argent en suivant vos revenus, en gérant vos dépenses et en visualisant vos habitudes de consommation.', ar: 'رفيقك المالي الشخصي. تحكم في أموالك عن طريق تتبع دخلك وإدارة نفقاتك وتصور عادات الإنفاق لديك.' },
-    featuresTitle: { en: 'Why You\'ll Love Finta CLOUD', fr: 'Pourquoi vous allez adorer Finta CLOUD', ar: 'لماذا ستحب Finta CLOUD' },
+    featuresTitle: { en: 'Why You\'ll Love KoinCLICK', fr: 'Pourquoi vous allez adorer KoinCLICK', ar: 'لماذا ستحب KoinCLICK' },
     featureBudgeting: { en: 'Smart Budgeting', fr: 'Budgétisation Intelligente', ar: 'ميزانية ذكية' },
     featureBudgetingDesc: { en: 'Create monthly budgets and track your spending to stay on top of your financial goals.', fr: 'Créez des budgets mensuels et suivez vos dépenses pour atteindre vos objectifs financiers.', ar: 'أنشئ ميزانيات شهرية وتتبع إنفاقك لتحقيق أهدافك المالية.' },
     featureMultiCurrency: { en: 'Multi-Currency', fr: 'Multi-devises', ar: 'متعدد العملات' },
@@ -47,7 +47,7 @@ const translationStrings = {
     featureDarkMode: { en: 'Dark Mode', fr: 'Mode Sombre', ar: 'الوضع الداكن' },
     featureDarkModeDesc: { en: 'Enjoy a comfortable viewing experience in low-light environments with our sleek dark theme.', fr: 'Profitez d\'une expérience visuelle confortable dans des environnements peu éclairés avec notre thème sombre élégant.', ar: 'استمتع بتجربة مشاهدة مريحة في البيئات منخفضة الإضاءة مع تصميمنا الداكن الأنيق.' },
     featurePWA: { en: 'Installable App', fr: 'Application Installable', ar: 'تطبيق قابل للتثبيت' },
-    featurePWADesc: { en: 'Install Finta CLOUD on any device for a native app experience, including offline access.', fr: 'Installez Finta CLOUD sur n\'importe quel appareil pour une expérience d\'application native, y compris l\'accès hors ligne.', ar: 'ثبت Finta CLOUD على أي جهاز لتجربة تشبه التطبيقات الأصلية، بما في ذلك الوصول دون اتصال بالإنترنت.' },
+    featurePWADesc: { en: 'Install KoinCLICK on any device for a native app experience, including offline access.', fr: 'Installez KoinCLICK sur n\'importe quel appareil pour une expérience d\'application native, y compris l\'accès hors ligne.', ar: 'ثبت KoinCLICK على أي جهاز لتجربة تشبه التطبيقات الأصلية، بما في ذلك الوصول دون اتصال بالإنترنت.' },
     liveDemoTitle: { en: 'See It In Action', fr: 'Voyez-le en action', ar: 'شاهده قيد التشغيل' },
     // Admin Dashboard
     adminPanel: { en: 'Admin Panel', fr: 'Panneau Admin', ar: 'لوحة التحكم' },

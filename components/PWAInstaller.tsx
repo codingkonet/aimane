@@ -39,7 +39,7 @@ const PWAInstaller: React.FC<PWAInstallerProps> = ({ onInstall, showInstallButto
             <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-2xl rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                     <div className="bg-primary/10 p-3 rounded-xl">
-                        <FintaIconSmall />
+                        <AppIconSmall />
                     </div>
                     <div>
                         <h4 className="font-bold text-slate-800 dark:text-slate-100">{t('pwaBannerTitle')}</h4>
@@ -69,7 +69,7 @@ const PWAInstaller: React.FC<PWAInstallerProps> = ({ onInstall, showInstallButto
     );
 };
 
-const FintaIconSmall = () => (
+const AppIconSmall = () => (
     <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
         <rect width="40" height="40" rx="12" fill="currentColor" fillOpacity="0.1" />
         <path d="M12 10H28V14H16V18H26V22H16V30H12V10Z" fill="currentColor" />

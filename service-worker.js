@@ -1,12 +1,49 @@
 
-const CACHE_NAME = 'fintacloud-v1-cache';
+const CACHE_NAME = 'koinclick-v1-cache';
 const OFFLINE_URL = '/index.html';
 
 const urlsToCache = [
   '/',
   '/index.html',
-  '/index.tsx',
+  '/vite.svg',
   '/manifest.json',
+  '/assets/icons/icon-192x192.png',
+  '/assets/icons/icon-512x512.png',
+
+  // Core scripts
+  '/index.tsx',
+  '/App.tsx',
+  '/types.ts',
+  '/translations.ts',
+  '/hooks/useLocalStorage.ts',
+  '/context/LanguageContext.tsx',
+  '/utils/formatting.ts',
+  '/utils/currencyConverter.ts',
+
+  // Components
+  '/components/Header.tsx',
+  '/components/SummaryCard.tsx',
+  '/components/BudgetTracker.tsx',
+  '/components/TransactionForm.tsx',
+  '/components/TransactionList.tsx',
+  '/components/BudgetChart.tsx',
+  '/components/TransactionFilter.tsx',
+  '/components/CurrencyConverter.tsx',
+  '/components/ThemeToggle.tsx',
+  '/components/Footer.tsx',
+  '/components/PWAInstaller.tsx',
+
+  // Pages
+  '/pages/DashboardPage.tsx',
+  '/pages/HomePage.tsx',
+  '/pages/LoginPage.tsx',
+  '/pages/RegisterPage.tsx',
+  '/pages/AdminDashboardPage.tsx',
+  '/pages/BlogPage.tsx',
+  '/pages/CreateArticlePage.tsx',
+  '/pages/ArticleDetailPage.tsx',
+
+  // External libraries
   'https://cdn.tailwindcss.com',
   'https://esm.sh/recharts@^3.6.0',
   'https://esm.sh/react@^19.2.3',
@@ -58,7 +95,7 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then((response) => {
       return response || fetch(event.request).then((fetchResponse) => {
         // Don't cache if not a success or if it's an external API that shouldn't be cached
-        if (!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+        if (!fetchResponse || fetchResponse.status !== 200) {
           return fetchResponse;
         }
         

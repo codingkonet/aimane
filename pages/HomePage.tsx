@@ -148,7 +148,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => 
                                         <div className="w-3 h-3 bg-red-500/80 rounded-full"></div>
                                         <div className="w-3 h-3 bg-yellow-400/80 rounded-full"></div>
                                         <div className="w-3 h-3 bg-green-500/80 rounded-full"></div>
-                                        <div className="ml-4 bg-slate-600/50 px-4 py-1 rounded text-[10px] text-slate-400 font-mono">app.fintacloud.io</div>
+                                        <div className="ml-4 bg-slate-600/50 px-4 py-1 rounded text-[10px] text-slate-400 font-mono">app.koinclick.io</div>
                                     </div>
                                     <div className="p-2 bg-slate-800">
                                         <div className="aspect-video bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700">
@@ -174,9 +174,9 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => 
             <section id="install" className="py-32 bg-slate-100 dark:bg-slate-800">
                 <div className="container mx-auto px-4 text-center max-w-3xl flex flex-col items-center">
                     <DownloadCloudIcon />
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Install Finta CLOUD</h2>
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Install KoinCLICK</h2>
                     <p className="text-slate-600 dark:text-slate-400 text-lg mb-12">
-                        Get the full desktop and mobile experience. Install Finta CLOUD for offline access, faster performance, and a native app feel.
+                        Get the full desktop and mobile experience. Install KoinCLICK for offline access, faster performance, and a native app feel.
                     </p>
                     <button 
                         onClick={onInstall}

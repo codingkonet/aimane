@@ -1,8 +1,8 @@
 
 {
-  "name": "Finta CLOUD Finance Manager",
-  "short_name": "Finta CLOUD",
-  "id": "fintacloud-app-v1",
+  "name": "KoinCLICK Finance Manager",
+  "short_name": "KoinCLICK",
+  "id": "koinclick-app-v1",
   "description": "Smart, multilingual budget manager by A.OUAG. Track expenses, manage income, and visualize your wealth.",
   "start_url": "/",
   "scope": "/",
