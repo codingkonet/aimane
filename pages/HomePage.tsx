@@ -38,6 +38,47 @@ const StepItem: React.FC<{ number: string, title: string, desc: string }> = ({ n
     </div>
 );
 
+const CheckIconMini = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>;
+
+const PlanCard: React.FC<{
+    title: string;
+    price: string;
+    desc: string;
+    features: string[];
+    ctaText: string;
+    ctaLink: string;
+    isRecommended?: boolean;
+}> = ({ title, price, desc, features, ctaText, ctaLink, isRecommended }) => (
+    <div className={`relative bg-white dark:bg-slate-800 p-8 rounded-3xl border ${isRecommended ? 'border-primary shadow-2xl shadow-primary/20' : 'border-slate-200 dark:border-slate-700 shadow-lg'} flex flex-col`}>
+        {isRecommended && (
+            <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
+                Recommended
+            </div>
+        )}
+        <h3 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100">{title}</h3>
+        <p className="text-center text-slate-500 dark:text-slate-400 mt-2">{desc}</p>
+        <div className="my-8 text-center">
+            <span className="text-5xl font-black text-slate-900 dark:text-white">{price}</span>
+            <span className="text-slate-500 dark:text-slate-400">/ month</span>
+        </div>
+        <ul className="space-y-4 mb-10 flex-grow">
+            {features.map((feature, i) => (
+                <li key={i} className="flex items-center gap-3">
+                    <CheckIconMini />
+                    <span className="text-slate-600 dark:text-slate-300">{feature}</span>
+                </li>
+            ))}
+        </ul>
+        <a 
+            href={ctaLink}
+            className={`w-full text-center font-bold py-4 px-10 rounded-2xl text-lg transition-all duration-300 active:scale-95 ${isRecommended ? 'bg-primary text-white hover:bg-indigo-700 shadow-xl shadow-primary/20' : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-200'}`}
+        >
+            {ctaText}
+        </a>
+    </div>
+);
+
+
 const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => {
   const { t } = useContext(LanguageContext);
   
@@ -47,6 +88,22 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => 
     { key: 'featureDarkMode', icon: <MoonIcon /> },
     { key: 'featurePWA', icon: <DevicePhoneMobileIcon /> },
   ];
+
+  const freeFeatures = [
+    t('featureBasicTracking'),
+    t('featureStandardBudgeting'),
+    t('featureMultiCurrencySupport'),
+    t('featureCommunityAccess'),
+  ];
+  
+  const proFeatures = [
+    t('featureEverythingInFree'),
+    t('featureAiAdvisor'),
+    t('featureUnlimitedAnalytics'),
+    t('featureRealtimeConverter'),
+    t('featurePrioritySupport'),
+  ];
+
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col selection:bg-primary selection:text-white">
@@ -109,6 +166,35 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => 
                                 icon={feature.icon} 
                             />
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Plans Section */}
+            <section id="plans" className="py-32 bg-slate-100 dark:bg-slate-950/50">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-3xl mx-auto text-center mb-20">
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">{t('plansTitle')}</h2>
+                        <p className="text-slate-600 dark:text-slate-400 text-lg">{t('plansSubtitle')}</p>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <PlanCard
+                            title={t('freePlanTitle')}
+                            price={t('freePlanPrice')}
+                            desc={t('freePlanDesc')}
+                            features={freeFeatures}
+                            ctaText={t('ctaGetStartedFree')}
+                            ctaLink="#/register"
+                        />
+                        <PlanCard
+                            title="Pro"
+                            price={t('proPlanPrice')}
+                            desc={t('proPlanDesc')}
+                            features={proFeatures}
+                            ctaText={t('ctaUpgradePro')}
+                            ctaLink="#/register"
+                            isRecommended
+                        />
                     </div>
                 </div>
             </section>
