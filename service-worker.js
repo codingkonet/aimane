@@ -13,7 +13,7 @@ const CRITICAL_ASSETS = [
 
 // Optional assets that shouldn't break installation if missing
 const OPTIONAL_ASSETS = [
-  'vite.svg',
+  'favicon.svg',
   'https://esm.sh/recharts@^3.6.0',
   'https://esm.sh/react@^19.2.3',
   'https://esm.sh/react-dom@^19.2.3'
@@ -88,7 +88,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Fallback for missing images
         if (event.request.destination === 'image') {
-          return caches.match('vite.svg');
+          return caches.match('favicon.svg');
         }
       });
     })
