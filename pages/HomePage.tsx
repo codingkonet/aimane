@@ -108,6 +108,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
     t('featurePrioritySupport'),
   ];
 
+  const apkUrl = "https://warehouse.appilix.com/uploads/app-apk-6973faa730228-1769208487.apk";
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col selection:bg-primary selection:text-white">
@@ -136,6 +137,19 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                     
                     <div className="w-full max-w-md mx-auto">
                         <LoginForm users={users} onLogin={onLogin} />
+                        <div className="my-6 flex items-center">
+                            <div className="flex-grow border-t border-slate-300 dark:border-slate-700"></div>
+                            <span className="flex-shrink mx-4 text-xs font-bold uppercase text-slate-400">{t('orGetTheApp')}</span>
+                            <div className="flex-grow border-t border-slate-300 dark:border-slate-700"></div>
+                        </div>
+                        <a 
+                            href={apkUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full flex items-center justify-center gap-3 bg-secondary text-white py-4 rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-secondary/20 active:scale-95"
+                        >
+                            <AndroidLogo /> {t('downloadAndroid')}
+                        </a>
                     </div>
                 </div>
             </section>
@@ -255,24 +269,34 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
             </section>
         </main>
         
-        {/* Install App Section */}
-        {showInstallButton && (
-            <section id="install" className="py-32 bg-slate-100 dark:bg-slate-800">
-                <div className="container mx-auto px-4 text-center max-w-3xl flex flex-col items-center">
-                    <DownloadCloudIcon />
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Install KoinCLICK</h2>
-                    <p className="text-slate-600 dark:text-slate-400 text-lg mb-12">
-                        Get the full desktop and mobile experience. Install KoinCLICK for offline access, faster performance, and a native app feel.
-                    </p>
-                    <button 
-                        onClick={onInstall}
-                        className="w-full sm:w-auto bg-primary text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-95"
+        {/* Get App Section */}
+        <section id="install" className="py-32 bg-slate-100 dark:bg-slate-800">
+            <div className="container mx-auto px-4 text-center max-w-3xl flex flex-col items-center">
+                <DownloadCloudIcon />
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">{t('getAppEverywhere')}</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-lg mb-12">
+                    {t('appDescription')}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    {showInstallButton && (
+                        <button 
+                            onClick={onInstall}
+                            className="w-full sm:w-auto bg-primary text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 flex items-center justify-center gap-3"
+                        >
+                           <DesktopIcon /> {t('installWebApp')}
+                        </button>
+                    )}
+                     <a 
+                        href={apkUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto bg-secondary text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-secondary/20 hover:shadow-secondary/40 active:scale-95 flex items-center justify-center gap-3"
                     >
-                        {t('installNow')}
-                    </button>
+                        <AndroidLogo /> {t('downloadAndroid')}
+                    </a>
                 </div>
-            </section>
-        )}
+            </div>
+        </section>
 
         <Footer />
     </div>
@@ -284,12 +308,18 @@ const ChartBarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-
 const GlobeAltIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9" /></svg>;
 const MoonIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>;
 const DevicePhoneMobileIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>;
-const DownloadIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>;
 const DownloadCloudIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-primary mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" /></svg>;
 const PiggyBankIconLarge = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-primary/40 mx-auto" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.883 8.05C18.232 5.025 15.42.925 12.015 2.05c-2.733.901-4.28 3.208-4.998 5.42C3.172 7.82.25 10.66.25 14.125c0 3.313 2.686 6 6 6h11.5c3.038 0 5.5-2.463 5.5-5.5 0-2.954-2.33-5.367-5.25-5.492l-.117-.008zM10.5 12.125c-.414 0-.75.336-.75.75s.336.75.75.75.75-.336.75-.75-.336-.75-.75-.75zm-1-3.5h5v-1h-5v1z" />
     </svg>
 );
+const AndroidLogo = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 1h-7A2.5 2.5 0 0 0 6 3.5v17A2.5 2.5 0 0 0 8.5 23h7a2.5 2.5 0 0 0 2.5-2.5v-17A2.5 2.5 0 0 0 15.5 1zm-3.5 21a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm4.5-4H7.5V4h9v14z" /></svg>
+);
+const DesktopIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+);
+
 
 export default HomePage;
