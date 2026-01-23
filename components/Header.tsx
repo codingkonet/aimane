@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
-import { Language, User } from '../types';
+import { Language, User, Currency } from '../types';
 import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
@@ -33,6 +33,12 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
         onUpdateUser({ ...user, theme: user.theme === 'light' ? 'dark' : 'light' });
     }
   }
+
+  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (user && onUpdateUser) {
+        onUpdateUser({ ...user, currency: e.target.value as Currency });
+    }
+  };
 
   const navigateToHome = () => {
     window.location.hash = user ? '/dashboard' : '/';
@@ -79,6 +85,18 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
                 <option value="fr" className="text-slate-800">FR</option>
                 <option value="ar" className="text-slate-800">AR</option>
             </select>
+            
+            {user && onUpdateUser && (
+                <select
+                    value={user.currency}
+                    onChange={handleCurrencyChange}
+                    className="bg-white/10 dark:bg-slate-700/50 text-white font-bold py-1.5 px-2 md:py-2 md:px-3 rounded-xl border border-white/20 focus:outline-none backdrop-blur-md appearance-none cursor-pointer text-xs md:text-base"
+                >
+                    <option value="USD" className="text-slate-800">USD</option>
+                    <option value="EUR" className="text-slate-800">EUR</option>
+                    <option value="MAD" className="text-slate-800">MAD</option>
+                </select>
+            )}
 
             {user && onUpdateUser && <div className="hidden xs:block"><ThemeToggle theme={user.theme} onToggle={handleThemeToggle} /></div>}
             

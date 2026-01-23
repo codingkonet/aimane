@@ -125,6 +125,14 @@ const translationStrings = {
     noMatchingTransactions: { en: 'No matching transactions found.', fr: 'Aucune transaction correspondante.', ar: 'لا توجد معاملات مطابقة.' },
     noExpenseData: { en: 'No expense data to display.', fr: 'Aucune donnée de dépense.', ar: 'لا توجد بيانات نفقات لعرضها.' },
 
+    // Import/Export
+    import: { en: 'Import', fr: 'Importer', ar: 'استيراد' },
+    export: { en: 'Export', fr: 'Exporter', ar: 'تصدير' },
+    exportPDF: { en: 'Export as PDF', fr: 'Exporter en PDF', ar: 'تصدير كـ PDF' },
+    exportExcel: { en: 'Export as CSV', fr: 'Exporter en CSV', ar: 'تصدير كـ CSV' },
+    importSuccess: { en: 'Transactions imported successfully!', fr: 'Transactions importées avec succès !', ar: 'تم استيراد المعاملات بنجاح!' },
+    importError: { en: 'Failed to import. Please check file format and content.', fr: 'Échec de l\'importation. Vérifiez le format et le contenu.', ar: 'فشل الاستيراد. يرجى التحقق من تنسيق الملف ومحتواه.' },
+
     // Filters
     filters: { en: 'Filters', fr: 'Filtres', ar: 'الفلاتر' },
     searchPlaceholder: { en: 'Search description...', fr: 'Rechercher une description...', ar: 'بحث في الوصف...' },

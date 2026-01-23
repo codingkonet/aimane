@@ -1,6 +1,6 @@
 
 import React, { useState, FormEvent, useContext } from 'react';
-import { User } from '../types';
+import { User, Currency } from '../types';
 import Header from '../components/Header';
 import { LanguageContext } from '../context/LanguageContext';
 
@@ -21,6 +21,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ users, onRegister }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [currency, setCurrency] = useState<Currency>('USD');
     const [error, setError] = useState('');
     const { language, t } = useContext(LanguageContext);
 
@@ -31,7 +32,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ users, onRegister }) => {
             setError(t('registerError'));
             return;
         }
-        onRegister({ name, email, password, language, currency: 'USD', theme: 'light', plan: 'Free' });
+        onRegister({ name, email, password, language, currency, theme: 'light', plan: 'Free' });
     };
 
     return (
@@ -57,6 +58,14 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ users, onRegister }) => {
                             <div>
                                 <label htmlFor="password" className="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">{t('passwordLabel')}</label>
                                 <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-2 w-full px-4 py-3 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all" />
+                            </div>
+                            <div>
+                                <label htmlFor="currency" className="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">{t('currency')}</label>
+                                <select id="currency" value={currency} onChange={e => setCurrency(e.target.value as Currency)} className="mt-2 w-full px-4 py-3 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all">
+                                    <option value="USD">USD ($)</option>
+                                    <option value="EUR">EUR (€)</option>
+                                    <option value="MAD">MAD (DH)</option>
+                                </select>
                             </div>
                             {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
                             <button type="submit" className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-95">

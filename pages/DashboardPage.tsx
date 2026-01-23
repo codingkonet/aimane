@@ -12,6 +12,10 @@ import TransactionFilter from '../components/TransactionFilter';
 import CurrencyConverter from '../components/CurrencyConverter';
 import { LanguageContext } from '../context/LanguageContext';
 import { GoogleGenAI } from "@google/genai";
+import { formatCurrency } from '../utils/formatting';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import Papa from 'papaparse';
 
 interface DashboardPageProps {
   user: User;
@@ -47,7 +51,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
 
         const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
         const summary = transactions.slice(0, 15).map(tx => 
-            `${tx.type === TransactionType.EXPENSE ? 'Spent' : 'Earned'} ${tx.amount} on ${tx.category} (${tx.description})`
+            `${tx.type === TransactionType.EXPENSE ? 'Spent' : 'Earned'} ${tx.amount} ${user.currency} on ${tx.category} (${tx.description})`
         ).join("\n");
         
         const languageMap = {
@@ -114,9 +118,107 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
     setTransactions(prev => prev.filter(t => t.id !== id));
   }, [setTransactions]);
 
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      Papa.parse(file, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+              try {
+                  const newTxs = results.data.map((row: any) => {
+                      const amount = parseFloat(row.amount);
+                      if (!row.date || !row.description || isNaN(amount) || !row.type || !row.category) {
+                          throw new Error(`Invalid row format: ${JSON.stringify(row)}`);
+                      }
+                      const newTx: Transaction = {
+                          id: crypto.randomUUID(),
+                          date: new Date(row.date).toISOString(),
+                          description: row.description,
+                          amount: amount,
+                          type: row.type.toUpperCase() as TransactionType,
+                          category: row.category as Category,
+                      };
+                      if (!Object.values(TransactionType).includes(newTx.type) || !Object.values(Category).includes(newTx.category)) {
+                           throw new Error(`Invalid type or category in row: ${JSON.stringify(row)}`);
+                      }
+                      return newTx;
+                  });
+                  setTransactions(prev => [...newTxs.reverse(), ...prev]);
+                  alert(t('importSuccess'));
+              } catch (error) {
+                  console.error("Import error:", error);
+                  alert(t('importError'));
+              }
+          },
+          error: (error: any) => {
+               console.error("CSV parsing error:", error);
+               alert(t('importError'));
+          }
+      });
+      if (event.target) event.target.value = '';
+  };
+  
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = ["Date", "Description", "Category", "Type", "Amount"];
+    const tableRows: any[] = [];
+
+    filteredTransactions.forEach(tx => {
+        const txData = [
+            new Date(tx.date).toLocaleDateString(user.language),
+            tx.description,
+            t(tx.category as any),
+            tx.type,
+            formatCurrency(tx.amount * (tx.type === 'EXPENSE' ? -1 : 1), user.currency, user.language)
+        ];
+        tableRows.push(txData);
+    });
+
+    (doc as any).autoTable({
+        head: [tableColumn],
+        body: tableRows,
+        startY: 20,
+    });
+    doc.text("Transaction Report", 14, 15);
+    doc.save("transactions.pdf");
+  };
+
+  const handleExportExcel = () => {
+    const headers = "Date,Description,Category,Type,Amount";
+    const csvContent = [
+        headers,
+        ...filteredTransactions.map(tx => 
+            [
+                new Date(tx.date).toISOString(),
+                `"${tx.description.replace(/"/g, '""')}"`,
+                tx.category,
+                tx.type,
+                tx.amount
+            ].join(',')
+        )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "transactions.csv");
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 selection:bg-primary selection:text-white">
       <Header user={user} onLogout={onLogout} onUpdateUser={onUpdateUser} onInstall={onInstall} showInstallButton={showInstallButton} />
+      <input type="file" ref={fileInputRef} onChange={handleFileImport} style={{ display: 'none' }} accept=".csv" />
       <main className="container mx-auto p-4 md:p-8">
         
         {/* Actions Row */}
@@ -190,6 +292,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
             isFiltered={!!searchTerm || selectedCategory !== 'all' || !!startDate || !!endDate}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
+            onImportClick={handleImportClick}
+            onExportPDF={handleExportPDF}
+            onExportExcel={handleExportExcel}
            />
         </div>
       </main>
