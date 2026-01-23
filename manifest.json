@@ -4,27 +4,27 @@
   "short_name": "KoinCLICK",
   "description": "Smart, multilingual budget manager. Track expenses and manage wealth offline.",
   "id": "koinclick-pwa-v2",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#4f46e5",
   "theme_color": "#4f46e5",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "./",
   "icons": [
     {
-      "src": "/assets/icons/icon-192x192.png",
+      "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/icon-192x192.png",
+      "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/icons/icon-512x512.png",
+      "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"

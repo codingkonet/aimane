@@ -21,7 +21,8 @@ root.render(
 // Register Service Worker for PWA with automatic updates
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+    // Use a relative path for the service worker to avoid origin mismatch in sandboxed environments
+    navigator.serviceWorker.register('service-worker.js')
       .then(registration => {
         console.log('SW registered with scope:', registration.scope);
         
@@ -39,7 +40,8 @@ if ('serviceWorker' in navigator) {
         });
       })
       .catch(error => {
-        console.error('Service Worker registration failed:', error);
+        // Log error but don't break the app functionality
+        console.warn('Service Worker registration failed:', error);
       });
   });
 

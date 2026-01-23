@@ -1,19 +1,19 @@
 
 const CACHE_NAME = 'koinclick-v2-cache';
-const OFFLINE_URL = '/index.html';
+const OFFLINE_URL = 'index.html';
 
 // Critical assets needed for the app to start
 const CRITICAL_ASSETS = [
-  '/',
-  '/index.html',
-  '/index.tsx',
-  '/manifest.json',
+  './',
+  'index.html',
+  'index.tsx',
+  'manifest.json',
   'https://cdn.tailwindcss.com'
 ];
 
 // Optional assets that shouldn't break installation if missing
 const OPTIONAL_ASSETS = [
-  '/vite.svg',
+  'vite.svg',
   'https://esm.sh/recharts@^3.6.0',
   'https://esm.sh/react@^19.2.3',
   'https://esm.sh/react-dom@^19.2.3'
@@ -88,7 +88,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Fallback for missing images
         if (event.request.destination === 'image') {
-          return caches.match('/vite.svg');
+          return caches.match('vite.svg');
         }
       });
     })
