@@ -3,10 +3,14 @@ import React, { useContext } from 'react';
 import Header from '../components/Header';
 import { LanguageContext } from '../context/LanguageContext';
 import Footer from '../components/Footer';
+import LoginForm from '../components/LoginForm';
+import { User } from '../types';
 
 interface HomePageProps {
     onInstall: () => void;
     showInstallButton: boolean;
+    users: User[];
+    onLogin: (user: User) => void;
 }
 
 const FeatureCard: React.FC<{ title: string, description: string, icon: React.ReactNode }> = ({ title, description, icon }) => (
@@ -79,7 +83,7 @@ const PlanCard: React.FC<{
 );
 
 
-const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => {
+const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users, onLogin }) => {
   const { t } = useContext(LanguageContext);
   
   const features = [
@@ -110,32 +114,28 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton }) => 
         <Header onInstall={onInstall} showInstallButton={showInstallButton} />
         
         <main className="flex-grow">
-            {/* Hero Section with Animated Glow */}
+            {/* Hero Section */}
             <section className="relative overflow-hidden pt-24 pb-20 px-4">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-primary/10 dark:bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
-                <div className="container mx-auto text-center relative z-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                        </span>
-                        {t('homeWelcome')}
+                <div className="container mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="text-center lg:text-left">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            </span>
+                            {t('homeWelcome')}
+                        </div>
+                        <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter leading-[1.1]">
+                            {t('homeTitle')}
+                        </h1>
+                        <p className="text-slate-600 dark:text-slate-400 text-xl md:text-2xl mt-4 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            {t('homeSubtitle')}
+                        </p>
                     </div>
-                    <h1 className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter leading-[1.1]">
-                        {t('homeTitle')}
-                    </h1>
-                    <p className="text-slate-600 dark:text-slate-400 text-xl md:text-2xl mt-4 max-w-2xl mx-auto leading-relaxed">
-                        {t('homeSubtitle')}
-                    </p>
-                    <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
-                        <a href="#/register" className="w-full sm:w-auto bg-primary text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-95">
-                            {t('getStarted')}
-                        </a>
-                        {showInstallButton && (
-                            <button onClick={onInstall} className="w-full sm:w-auto bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 shadow-lg flex items-center justify-center gap-3 border border-slate-200 dark:border-slate-700">
-                               <DownloadIcon /> {t('installApp')}
-                            </button>
-                        )}
+                    
+                    <div className="w-full max-w-md mx-auto">
+                        <LoginForm users={users} onLogin={onLogin} />
                     </div>
                 </div>
             </section>

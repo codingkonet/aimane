@@ -4,8 +4,6 @@ import { Category } from '../types';
 import { LanguageContext } from '../context/LanguageContext';
 
 interface TransactionFilterProps {
-    searchTerm: string;
-    setSearchTerm: (value: string) => void;
     selectedCategory: string;
     setSelectedCategory: (value: string) => void;
     startDate: string;
@@ -16,25 +14,16 @@ interface TransactionFilterProps {
 }
 
 const TransactionFilter: React.FC<TransactionFilterProps> = ({
-    searchTerm, setSearchTerm, selectedCategory, setSelectedCategory,
+    selectedCategory, setSelectedCategory,
     startDate, setStartDate, endDate, setEndDate, handleReset
 }) => {
     const { t } = useContext(LanguageContext);
     const allCategories = Object.values(Category);
 
     return (
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg mb-8">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
             <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-4">{t('filters')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Search Input */}
-                <input
-                    type="text"
-                    placeholder={t('searchPlaceholder')}
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white"
-                />
-
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* Category Select */}
                 <select
                     value={selectedCategory}
@@ -70,7 +59,7 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                 {/* Reset Button */}
                 <button
                     onClick={handleReset}
-                    className="w-full md:w-auto bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500"
+                    className="w-full bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500"
                 >
                     {t('resetFilters')}
                 </button>

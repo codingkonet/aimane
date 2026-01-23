@@ -116,7 +116,7 @@ const App: React.FC = () => {
     switch (route) {
       case '#/login': return <LoginPage users={users} onLogin={handleLogin} />;
       case '#/register': return <RegisterPage users={users} onRegister={handleRegister} />;
-      default: return <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+      default: return <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} users={users} onLogin={handleLogin} />;
     }
   };
 

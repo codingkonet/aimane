@@ -39,15 +39,39 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
     if (!isPro) return;
     setAiLoading(true);
     try {
+        if (transactions.length < 3) {
+            setAiAdvice(t('addMoreTransactionsForAdvice'));
+            setAiLoading(false);
+            return;
+        }
+
         const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        const summary = transactions.slice(0, 10).map(tx => `${tx.category}: ${tx.amount}`).join(", ");
+        const summary = transactions.slice(0, 15).map(tx => 
+            `${tx.type === TransactionType.EXPENSE ? 'Spent' : 'Earned'} ${tx.amount} on ${tx.category} (${tx.description})`
+        ).join("\n");
+        
+        const languageMap = {
+            'en': 'English',
+            'fr': 'French',
+            'ar': 'Arabic'
+        };
+        const languageName = languageMap[user.language] || 'English';
+
+        const prompt = `You are a helpful financial advisor. Analyze the following recent transactions for a user of a budgeting app:\n\n${summary}\n\nBased on this spending, provide exactly 3 short, encouraging, and actionable financial tips to help them improve. The response must be in ${languageName}. Format the tips as a simple, unnumbered list, with each tip on a new line starting with a dash (-).`;
+
         const response = await ai.models.generateContent({
             model: 'gemini-3-flash-preview',
-            contents: `As a financial expert, analyze this spending: ${summary}. Give 3 short, actionable tips in ${user.language === 'fr' ? 'French' : user.language === 'ar' ? 'Arabic' : 'English'}.`,
+            contents: prompt,
         });
-        setAiAdvice(response.text || "No specific advice at this time.");
+
+        if (response && response.text) {
+            setAiAdvice(response.text);
+        } else {
+            setAiAdvice(t('noAiAdvice'));
+        }
     } catch (e) {
-        setAiAdvice("The AI Advisor is currently busy. Try again later.");
+        console.error("AI Advisor Error:", e);
+        setAiAdvice(t('aiAdvisorError'));
     } finally {
         setAiLoading(false);
     }
@@ -120,9 +144,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
                     <h4 className="font-bold text-sm text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
                         {t('aiAdvisor')} {!isPro && <span className="text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded-full uppercase">PRO</span>}
                     </h4>
-                    <p className="text-xs text-indigo-700/70 dark:text-indigo-300/50">
+                    <div className="text-xs text-indigo-700/70 dark:text-indigo-300/50 whitespace-pre-wrap">
                         {isPro ? (aiAdvice || t('getAdvisorTips')) : 'Upgrade to unlock AI spending analysis.'}
-                    </p>
+                    </div>
                 </div>
                 {isPro && (
                     <button onClick={getAiAdvice} disabled={aiLoading} className="bg-white dark:bg-slate-800 p-2 rounded-lg shadow-sm hover:shadow-md transition disabled:opacity-50">
@@ -154,7 +178,6 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
 
         <div className="mt-8">
           <TransactionFilter 
-            searchTerm={searchTerm} setSearchTerm={setSearchTerm}
             selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}
             startDate={startDate} setStartDate={setStartDate}
             endDate={endDate} setEndDate={setEndDate}
@@ -165,6 +188,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
             onDeleteTransaction={deleteTransaction}
             currency={user.currency}
             isFiltered={!!searchTerm || selectedCategory !== 'all' || !!startDate || !!endDate}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
            />
         </div>
       </main>

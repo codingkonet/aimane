@@ -9,6 +9,8 @@ interface TransactionListProps {
   onDeleteTransaction: (id: string) => void;
   currency: Currency;
   isFiltered: boolean;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
 }
 
 const TrashIcon: React.FC<{className?: string}> = ({className}) => (
@@ -17,6 +19,11 @@ const TrashIcon: React.FC<{className?: string}> = ({className}) => (
     </svg>
 );
 
+const SearchIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+);
 
 const TransactionItem: React.FC<{transaction: Transaction; onDelete: (id: string) => void, currency: Currency}> = ({ transaction, onDelete, currency }) => {
     const { language, t } = useContext(LanguageContext);
@@ -58,11 +65,25 @@ const TransactionItem: React.FC<{transaction: Transaction; onDelete: (id: string
 };
 
 
-const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction, currency, isFiltered }) => {
+const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction, currency, isFiltered, searchTerm, setSearchTerm }) => {
   const { t } = useContext(LanguageContext);
   return (
-    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200 mb-4">{t('recentTransactions')}</h2>
+    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg mt-8">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200">{t('recentTransactions')}</h2>
+            <div className="relative w-full md:w-64">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <SearchIcon className="h-5 w-5 text-slate-400" />
+                </span>
+                <input
+                    type="text"
+                    placeholder={t('searchPlaceholder')}
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                />
+            </div>
+        </div>
       {transactions.length === 0 ? (
         <p className="text-center text-slate-500 dark:text-slate-400 py-8">
             {isFiltered ? t('noMatchingTransactions') : t('noTransactions')}
