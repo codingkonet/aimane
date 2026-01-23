@@ -141,7 +141,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <BudgetTracker totalExpenses={totalExpenses} budget={budget} setBudget={setBudget} currency={user.currency}/>
-            <TransactionForm onAddTransaction={addTransaction} />
+            <TransactionForm onAddTransaction={addTransaction} isPro={isPro} />
             <CurrencyConverter balance={balance} baseCurrency={user.currency} />
           </div>
           <div className="lg:col-span-3">

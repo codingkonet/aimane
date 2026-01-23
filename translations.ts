@@ -71,6 +71,7 @@ const translationStrings = {
     goPro: { en: 'Go Pro', fr: 'Devenir Pro', ar: 'كن Pro' },
     proFeatures: { en: 'Pro Features', fr: 'Fonctionnalités Pro', ar: 'ميزات Pro' },
     aiAdvisor: { en: 'AI Financial Advisor', fr: 'Conseiller Financier IA', ar: 'مستشار مالي بالذكاء الاصطناعي' },
+    aiSuggestedCategory: { en: 'Category suggested by AI', fr: 'Catégorie suggérée par l\'IA', ar: 'الفئة المقترحة بواسطة الذكاء الاصطناعي' },
     getAdvisorTips: { en: 'Get AI insights on your spending habits.', fr: 'Obtenez des conseils IA sur vos habitudes.', ar: 'احصل على رؤى الذكاء الاصطناعي حول عاداتك.' },
     proPlanTitle: { en: 'Unlock Your Full Potential', fr: 'Débloquez tout votre potentiel', ar: 'أطلق العنان لإمكانياتك الكاملة' },
     proPlanSubtitle: { en: 'Take control with advanced analytics and AI-powered insights.', fr: 'Prenez le contrôle avec des analyses avancées et l\'IA.', ar: 'تحكم مع التحليلات المتقدمة ورؤى الذكاء الاصطناعي.' },
