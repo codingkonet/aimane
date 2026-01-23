@@ -31,7 +31,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ users, onRegister }) => {
             setError(t('registerError'));
             return;
         }
-        onRegister({ name, email, password, language, currency: 'USD', theme: 'light' });
+        onRegister({ name, email, password, language, currency: 'USD', theme: 'light', plan: 'Free' });
     };
 
     return (

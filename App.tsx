@@ -85,9 +85,12 @@ const App: React.FC = () => {
   }, [setCurrentUser]);
 
   const handleUpdateUser = (updatedUser: User) => {
-    setCurrentUser(updatedUser);
     setUsers(users.map(u => u.email === updatedUser.email ? updatedUser : u));
-    if (updatedUser.language) setLanguage(updatedUser.language);
+    // Only update current user if it's the one being changed
+    if (currentUser && currentUser.email === updatedUser.email) {
+        setCurrentUser(updatedUser);
+        if (updatedUser.language) setLanguage(updatedUser.language);
+    }
   }
 
   const renderPage = () => {

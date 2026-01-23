@@ -24,6 +24,15 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, users, on
       proUsers: users.filter(u => u.plan === 'Pro').length,
       revenue: users.filter(u => u.plan === 'Pro').length * settings.proPrice
   }), [users, settings.proPrice]);
+  
+  const toggleUserPlan = (userToUpdate: User) => {
+    if (userToUpdate.email === 'hello@ouaglabs.com') {
+        alert("Cannot change the admin's plan.");
+        return;
+    }
+    const newPlan = userToUpdate.plan === 'Pro' ? 'Free' : 'Pro';
+    onUpdateUser({ ...userToUpdate, plan: newPlan });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800">
@@ -82,6 +91,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, users, on
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Plan</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t('language')}</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t('currency')}</th>
+                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t('adminActions')}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
@@ -98,6 +108,15 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, users, on
                                     </td>
                                     <td className="px-6 py-4 text-sm uppercase text-slate-500">{u.language}</td>
                                     <td className="px-6 py-4 text-sm font-bold text-emerald-600">{u.currency}</td>
+                                    <td className="px-6 py-4">
+                                        {u.email !== 'hello@ouaglabs.com' && (
+                                            u.plan === 'Free' ? (
+                                                <button onClick={() => toggleUserPlan(u)} className="bg-secondary text-white font-bold text-xs py-1 px-3 rounded-lg hover:bg-emerald-600 transition">{t('adminUpgrade')}</button>
+                                            ) : (
+                                                <button onClick={() => toggleUserPlan(u)} className="bg-amber-500 text-white font-bold text-xs py-1 px-3 rounded-lg hover:bg-amber-600 transition">{t('adminDowngrade')}</button>
+                                            )
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

@@ -82,6 +82,8 @@ const translationStrings = {
     cvc: { en: 'CVC', fr: 'CVC', ar: 'رمز الأمان' },
     processing: { en: 'Processing...', fr: 'Traitement...', ar: 'جاري المعالجة...' },
     paymentSuccess: { en: 'Welcome to Pro!', fr: 'Bienvenue au Pro !', ar: 'مرحباً بك في Pro!' },
+    upgradeManualInstructions: { en: 'To upgrade, please complete the payment via PayPal. Your account will be manually upgraded by an administrator within 24 hours.', fr: 'Pour mettre à niveau, veuillez effectuer le paiement via PayPal. Votre compte sera mis à niveau manuellement par un administrateur dans les 24 heures.', ar: 'للترقية، يرجى إتمام الدفع عبر PayPal. سيتم ترقية حسابك يدويًا من قبل مسؤول في غضون 24 ساعة.' },
+    contactSupport: { en: 'For faster processing, please contact support with your transaction ID.', fr: 'Pour un traitement plus rapide, veuillez contacter le support avec votre ID de transaction.', ar: ' لمعالجة أسرع، يرجى الاتصال بالدعم مع معرف المعاملة الخاص بك.' },
 
     // Admin
     adminPanel: { en: 'Admin Panel', fr: 'Panneau Admin', ar: 'لوحة التحكم' },
@@ -91,6 +93,9 @@ const translationStrings = {
     totalUsers: { en: 'Total Users', fr: 'Total Utilisateurs', ar: 'إجمالي المستخدمين' },
     backToDashboard: { en: 'Back to Dashboard', fr: 'Retour au Tableau de bord', ar: 'العودة إلى لوحة القيادة' },
     userManagement: { en: 'User Management', fr: 'Gestion Utilisateurs', ar: 'إدارة المستخدمين' },
+    adminActions: { en: 'Actions', fr: 'Actions', ar: 'إجراءات' },
+    adminUpgrade: { en: 'Upgrade to Pro', fr: 'Passer en Pro', ar: 'الترقية إلى Pro' },
+    adminDowngrade: { en: 'Downgrade to Free', fr: 'Rétrograder', ar: 'العودة إلى مجاني' },
 
     // Dashboard
     totalIncome: { en: 'Total Income', fr: 'Revenu Total', ar: 'إجمالي الدخل' },
