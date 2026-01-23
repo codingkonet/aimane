@@ -1,17 +1,15 @@
 
 {
-  "name": "KoinCLICK Finance Manager",
+  "name": "KoinCLICK Budget Manager",
   "short_name": "KoinCLICK",
-  "id": "koinclick-app-v1",
-  "description": "Smart, multilingual budget manager by A.OUAG. Track expenses, manage income, and visualize your wealth.",
+  "description": "Smart, multilingual budget manager. Track expenses and manage wealth offline.",
+  "id": "koinclick-pwa-v2",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "minimal-ui"],
   "background_color": "#4f46e5",
   "theme_color": "#4f46e5",
   "orientation": "portrait",
-  "categories": ["finance", "productivity"],
+  "scope": "/",
   "icons": [
     {
       "src": "/assets/icons/icon-192x192.png",
@@ -30,28 +28,7 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "New Transaction",
-      "short_name": "Add",
-      "description": "Add a new expense or income",
-      "url": "/#/dashboard",
-      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Community Blog",
-      "short_name": "Blog",
-      "description": "Read financial tips",
-      "url": "/#/blog",
-      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
-    }
-  ]
+  "categories": ["finance", "productivity"]
 }
