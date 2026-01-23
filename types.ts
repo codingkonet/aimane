@@ -2,6 +2,7 @@
 export type Language = 'en' | 'fr' | 'ar';
 export type Currency = 'USD' | 'EUR' | 'MAD';
 export type Theme = 'light' | 'dark';
+export type Plan = 'Free' | 'Pro';
 
 export enum TransactionType {
   INCOME = 'INCOME',
@@ -9,7 +10,6 @@ export enum TransactionType {
 }
 
 export enum Category {
-  // Expenses
   GROCERIES = 'Groceries',
   RESTAURANTS = 'Restaurants',
   TRANSPORT = 'Transport',
@@ -22,8 +22,6 @@ export enum Category {
   SAVINGS = 'Savings',
   DEBT_PAYMENT = 'Debt Payment',
   OTHER_EXPENSE = 'Other Expense',
-
-  // Income
   SALARY = 'Salary',
   FREELANCE_INCOME = 'Freelance Income',
   INVESTMENT_RETURNS = 'Investment Returns',
@@ -44,10 +42,11 @@ export interface Transaction {
 export interface User {
   name: string;
   email: string;
-  password: string; // In a real app, this should be a secure hash
+  password: string;
   language: Language;
   currency: Currency;
   theme: Theme;
+  plan: Plan;
 }
 
 export interface Comment {
@@ -67,5 +66,11 @@ export interface Article {
   category: string;
   date: string;
   comments: Comment[];
-  likes: string[]; // List of user emails who liked
+  likes: string[];
+}
+
+export interface PlatformSettings {
+  proPrice: number;
+  stripeEnabled: boolean;
+  paypalEnabled: boolean;
 }

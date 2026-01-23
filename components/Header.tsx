@@ -35,8 +35,10 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
   }
 
   const navigateToHome = () => {
-    window.location.hash = '/';
+    window.location.hash = user ? '/dashboard' : '/';
   };
+
+  const isPro = user?.plan === 'Pro' || user?.email === 'hello@ouaglabs.com';
 
   return (
     <header className="bg-primary shadow-lg sticky top-0 z-50">
@@ -46,9 +48,16 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
           className="flex items-center gap-2 md:gap-3 cursor-pointer group hover:opacity-90 transition-all"
         >
             <AppLogo />
-            <h1 className="text-xl md:text-3xl font-black text-white tracking-tighter">
-              KoinCLICK
-            </h1>
+            <div className="flex flex-col md:flex-row md:items-center md:gap-2">
+                <h1 className="text-xl md:text-3xl font-black text-white tracking-tighter leading-none">
+                  KoinCLICK
+                </h1>
+                {user && (
+                    <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${isPro ? 'bg-indigo-800 text-indigo-100 shadow-lg' : 'bg-white/20 text-white'}`}>
+                        {isPro ? 'Pro' : 'Free'}
+                    </span>
+                )}
+            </div>
         </div>
         <div className="flex items-center gap-2 md:gap-4">
             {showInstallButton && (
@@ -60,6 +69,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
                     <span className="hidden xs:inline">{t('installApp')}</span>
                 </button>
             )}
+            
             <select
                 value={language}
                 onChange={handleLangChange}
@@ -69,7 +79,9 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
                 <option value="fr" className="text-slate-800">FR</option>
                 <option value="ar" className="text-slate-800">AR</option>
             </select>
+
             {user && onUpdateUser && <div className="hidden xs:block"><ThemeToggle theme={user.theme} onToggle={handleThemeToggle} /></div>}
+            
             {onLogout && (
                 <button
                     onClick={onLogout}

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
-import { User } from './types';
+import { User, PlatformSettings } from './types';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -10,10 +10,10 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 import BlogPage from './pages/BlogPage';
 import CreateArticlePage from './pages/CreateArticlePage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
+import UpgradePage from './pages/UpgradePage';
 import { LanguageContext } from './context/LanguageContext';
 import PWAInstaller from './components/PWAInstaller';
 
-// Define the BeforeInstallPromptEvent interface
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: Array<string>;
   readonly userChoice: Promise<{
@@ -23,68 +23,47 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+const DEFAULT_SETTINGS: PlatformSettings = {
+    proPrice: 5,
+    stripeEnabled: true,
+    paypalEnabled: true
+};
 
 const App: React.FC = () => {
   const [users, setUsers] = useLocalStorage<User[]>('users', []);
   const [currentUser, setCurrentUser] = useLocalStorage<User | null>('currentUser', null);
+  const [settings, setSettings] = useLocalStorage<PlatformSettings>('platformSettings', DEFAULT_SETTINGS);
   const [route, setRoute] = useState(window.location.hash);
   const { setLanguage } = useContext(LanguageContext);
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
-      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
-      // Stash the event so it can be triggered later.
       setInstallPrompt(e as BeforeInstallPromptEvent);
-      console.log('Install prompt captured');
     };
-
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Listen for the appinstalled event
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA was installed');
-      setInstallPrompt(null);
-    });
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
   
   const handleInstall = async () => {
     if (!installPrompt) return;
-    // Show the install prompt
     await installPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    const { outcome } = await installPrompt.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
-    // We've used the prompt, and can't use it again, throw it away
     setInstallPrompt(null);
   }
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setRoute(window.location.hash);
-    };
+    const handleHashChange = () => setRoute(window.location.hash);
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   useEffect(() => {
-    if (currentUser?.language) {
-      setLanguage(currentUser.language);
-    }
-    // Theme management
+    if (currentUser?.language) setLanguage(currentUser.language);
     const root = window.document.documentElement;
-    if (currentUser?.theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+    if (currentUser?.theme === 'dark') root.classList.add('dark');
+    else root.classList.remove('dark');
   }, [currentUser, setLanguage]);
-
 
   const handleLogin = (user: User) => {
     setCurrentUser(user);
@@ -108,40 +87,33 @@ const App: React.FC = () => {
   const handleUpdateUser = (updatedUser: User) => {
     setCurrentUser(updatedUser);
     setUsers(users.map(u => u.email === updatedUser.email ? updatedUser : u));
-    if (updatedUser.language) {
-        setLanguage(updatedUser.language);
-    }
+    if (updatedUser.language) setLanguage(updatedUser.language);
   }
 
   const renderPage = () => {
     if (currentUser) {
        if (route === '#/admin' && currentUser.email === 'hello@ouaglabs.com') {
-         return <AdminDashboardPage user={currentUser} users={users} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+         return <AdminDashboardPage user={currentUser} users={users} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} settings={settings} onUpdateSettings={setSettings} />;
        }
-
+       if (route === '#/upgrade') {
+         return <UpgradePage user={currentUser} onUpdateUser={handleUpdateUser} settings={settings} />;
+       }
        if (route === '#/blog') {
          return <BlogPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
        }
-
        if (route === '#/blog/create') {
          return <CreateArticlePage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
        }
-
        if (route.startsWith('#/blog/post/')) {
          const id = route.split('/').pop() || '';
          return <ArticleDetailPage id={id} user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
        }
-
-       return <DashboardPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+       return <DashboardPage user={currentUser} onLogout={handleLogout} onUpdateUser={handleUpdateUser} onInstall={handleInstall} showInstallButton={!!installPrompt} settings={settings} />;
     }
-
     switch (route) {
-      case '#/login':
-        return <LoginPage users={users} onLogin={handleLogin} />;
-      case '#/register':
-        return <RegisterPage users={users} onRegister={handleRegister} />;
-      default:
-        return <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} />;
+      case '#/login': return <LoginPage users={users} onLogin={handleLogin} />;
+      case '#/register': return <RegisterPage users={users} onRegister={handleRegister} />;
+      default: return <HomePage onInstall={handleInstall} showInstallButton={!!installPrompt} />;
     }
   };
 
