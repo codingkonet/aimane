@@ -65,6 +65,10 @@ const translationStrings = {
     featureUnlimitedAnalytics: { en: 'Unlimited Detailed Analytics', fr: 'Analyses détaillées illimitées', ar: 'تحليلات مفصلة غير محدودة' },
     featureRealtimeConverter: { en: 'Real-time Currency Converter', fr: 'Convertisseur de devises en temps réel', ar: 'محول عملات في الوقت الحقيقي' },
     featurePrioritySupport: { en: 'Priority Support', fr: 'Support prioritaire', ar: 'دعم ذو أولوية' },
+    orGetTheApp: { en: 'Or get the app', fr: 'Ou obtenez l\'application', ar: 'أو احصل على التطبيق' },
+    getAppEverywhere: { en: 'Get the App Everywhere', fr: 'Obtenez l\'application partout', ar: 'احصل على التطبيق في كل مكان' },
+    appDescription: { en: 'Access your finances anywhere, anytime. Our app is available on modern browsers for a seamless experience.', fr: 'Accédez à vos finances partout, à tout moment. Notre application est disponible sur les navigateurs modernes pour une expérience fluide.', ar: 'الوصول إلى أموالك في أي مكان وفي أي وقت. تطبيقنا متاح على المتصفحات الحديثة لتجربة سلسة.' },
+    installWebApp: { en: 'Install Web App', fr: 'Installer l\'App Web', ar: 'تثبيت تطبيق الويب' },
 
     // Pro Plan & Payments
     upgradeToPro: { en: 'Upgrade to Pro', fr: 'Passer au Pro', ar: 'الترقية إلى Pro' },
