@@ -52,11 +52,12 @@ const PlanCard: React.FC<{
     ctaText: string;
     ctaLink: string;
     isRecommended?: boolean;
-}> = ({ title, price, desc, features, ctaText, ctaLink, isRecommended }) => (
+    t: (key: any) => string;
+}> = ({ title, price, desc, features, ctaText, ctaLink, isRecommended, t }) => (
     <div className={`relative bg-white dark:bg-slate-800 p-8 rounded-3xl border ${isRecommended ? 'border-primary shadow-2xl shadow-primary/20' : 'border-slate-200 dark:border-slate-700 shadow-lg'} flex flex-col`}>
         {isRecommended && (
             <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
-                Recommended
+                {t('recommended')}
             </div>
         )}
         <h3 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100">{title}</h3>
@@ -108,8 +109,6 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
     t('featurePrioritySupport'),
   ];
 
-  const apkUrl = "https://warehouse.appilix.com/uploads/app-apk-6973faa730228-1769208487.apk";
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col selection:bg-primary selection:text-white">
         <Header onInstall={onInstall} showInstallButton={showInstallButton} />
@@ -137,19 +136,21 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                     
                     <div className="w-full max-w-md mx-auto">
                         <LoginForm users={users} onLogin={onLogin} />
-                        <div className="my-6 flex items-center">
-                            <div className="flex-grow border-t border-slate-300 dark:border-slate-700"></div>
-                            <span className="flex-shrink mx-4 text-xs font-bold uppercase text-slate-400">{t('orGetTheApp')}</span>
-                            <div className="flex-grow border-t border-slate-300 dark:border-slate-700"></div>
-                        </div>
-                        <a 
-                            href={apkUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-3 bg-secondary text-white py-4 rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-secondary/20 active:scale-95"
-                        >
-                            <AndroidLogo /> {t('downloadAndroid')}
-                        </a>
+                        {showInstallButton && (
+                            <>
+                                <div className="my-6 flex items-center">
+                                    <div className="flex-grow border-t border-slate-300 dark:border-slate-700"></div>
+                                    <span className="flex-shrink mx-4 text-xs font-bold uppercase text-slate-400">{t('orGetTheApp')}</span>
+                                    <div className="flex-grow border-t border-slate-300 dark:border-slate-700"></div>
+                                </div>
+                                <button
+                                    onClick={onInstall}
+                                    className="w-full flex items-center justify-center gap-3 bg-secondary text-white py-4 rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-secondary/20 active:scale-95"
+                                >
+                                    <DesktopIcon /> {t('installWebApp')}
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
@@ -193,6 +194,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         <PlanCard
+                            t={t}
                             title={t('freePlanTitle')}
                             price={t('freePlanPrice')}
                             desc={t('freePlanDesc')}
@@ -201,6 +203,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                             ctaLink="#/register"
                         />
                         <PlanCard
+                            t={t}
                             title="Pro"
                             price={t('proPlanPrice')}
                             desc={t('proPlanDesc')}
@@ -277,7 +280,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                 <p className="text-slate-600 dark:text-slate-400 text-lg mb-12">
                     {t('appDescription')}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     {showInstallButton && (
                         <button 
                             onClick={onInstall}
@@ -286,14 +289,6 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                            <DesktopIcon /> {t('installWebApp')}
                         </button>
                     )}
-                     <a 
-                        href={apkUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full sm:w-auto bg-secondary text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-secondary/20 hover:shadow-secondary/40 active:scale-95 flex items-center justify-center gap-3"
-                    >
-                        <AndroidLogo /> {t('downloadAndroid')}
-                    </a>
                 </div>
             </div>
         </section>
@@ -313,9 +308,6 @@ const PiggyBankIconLarge = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-primary/40 mx-auto" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.883 8.05C18.232 5.025 15.42.925 12.015 2.05c-2.733.901-4.28 3.208-4.998 5.42C3.172 7.82.25 10.66.25 14.125c0 3.313 2.686 6 6 6h11.5c3.038 0 5.5-2.463 5.5-5.5 0-2.954-2.33-5.367-5.25-5.492l-.117-.008zM10.5 12.125c-.414 0-.75.336-.75.75s.336.75.75.75.75-.336.75-.75-.336-.75-.75-.75zm-1-3.5h5v-1h-5v1z" />
     </svg>
-);
-const AndroidLogo = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 1h-7A2.5 2.5 0 0 0 6 3.5v17A2.5 2.5 0 0 0 8.5 23h7a2.5 2.5 0 0 0 2.5-2.5v-17A2.5 2.5 0 0 0 15.5 1zm-3.5 21a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm4.5-4H7.5V4h9v14z" /></svg>
 );
 const DesktopIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
