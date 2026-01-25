@@ -51,7 +51,7 @@ const translationStrings = {
     freePlanTitle: { en: 'Free', fr: 'Gratuit', ar: 'مجاني' },
     freePlanPrice: { en: '$0', fr: '0€', ar: '0 د.م' },
     freePlanDesc: { en: 'For individuals starting their budgeting journey.', fr: 'Pour les particuliers qui commencent leur parcours budgétaire.', ar: 'للأفراد الذين يبدأون رحلتهم في الميزانية.' },
-    proPlanName: { en: 'Pro', fr: 'Pro', ar: 'Pro' }, // Added for plan card title
+    proPlanName: { en: 'Pro', fr: 'Pro', ar: 'Pro' }, 
     proPlanPrice: { en: '$5', fr: '5€', ar: '50 د.م' },
     proPlanDesc: { en: 'For power users who want advanced features.', fr: 'Pour les utilisateurs avancés qui veulent des fonctionnalités de pointe.', ar: 'للمستخدمين المتميزين الذين يريدون ميزات متقدمة.' },
     ctaGetStartedFree: { en: 'Get Started for Free', fr: 'Commencer Gratuitement', ar: 'ابدأ مجانًا' },
@@ -68,8 +68,10 @@ const translationStrings = {
     featurePrioritySupport: { en: 'Priority Support', fr: 'Support prioritaire', ar: 'دعم ذو أولوية' },
     orGetTheApp: { en: 'Or get the app', fr: 'Ou obtenez l\'application', ar: 'أو احصل على التطبيق' },
     getAppEverywhere: { en: 'Get the App Everywhere', fr: 'Obtenez l\'application partout', ar: 'احصل على التطبيق في كل مكان' },
-    appDescription: { en: 'Access your finances anywhere, anytime. Our app is available on modern browsers for a seamless experience.', fr: 'Accédez à vos finances partout, à tout moment. Notre application est disponible sur les navigateurs modernes pour une expérience fluide.', ar: 'الوصول إلى أموالك في أي مكان وفي أي وقت. تطبيقنا متاح على المتصفحات الحديثة لتجربة سلسة.' },
+    appDescription: { en: 'Access your finances anywhere, anytime. Our app is available on modern browsers for a seamless experience. Install it on your Android or iOS device for the best experience.', fr: 'Accédez à vos finances partout, à tout moment. Notre application est disponible sur les navigateurs modernes pour une expérience fluide. Installez-la sur votre appareil Android ou iOS.', ar: 'الوصول إلى أموالك في أي مكان وفي أي وقت. تطبيقنا متاح على المتصفحات الحديثة لتجربة سلسة. قم بتثبيته على جهاز Android أو iOS الخاص بك.' },
     installWebApp: { en: 'Install Web App', fr: 'Installer l\'App Web', ar: 'تثبيت تطبيق الويب' },
+    downloadForAndroid: { en: 'Download for Android', fr: 'Télécharger pour Android', ar: 'تحميل للأندرويد' },
+    installInstructions: { en: 'Install KoinCLICK to your home screen for quick access and offline mode.', fr: 'Installez KoinCLICK sur votre écran d\'accueil pour un accès rapide et hors ligne.', ar: 'قم بتثبيت KoinCLICK على شاشتك الرئيسية للوصول السريع والوضع غير المتصل بالشبكة.' },
 
     // Pro Plan & Payments
     upgradeToPro: { en: 'Upgrade to Pro', fr: 'Passer au Pro', ar: 'الترقية إلى Pro' },
@@ -99,6 +101,7 @@ const translationStrings = {
     platformSettings: { en: 'Platform Settings', fr: 'Paramètres Plateforme', ar: 'إعدادات المنصة' },
     proPricing: { en: 'Pro Plan Price', fr: 'Prix du plan Pro', ar: 'سعر باقة Pro' },
     paymentGateways: { en: 'Payment Gateways', fr: 'Passerelles de paiement', ar: 'بوابات الدفع' },
+    paypalEmailLabel: { en: 'PayPal Business Email', fr: 'Email PayPal Business', ar: 'بريد PayPal التجاري' },
     totalUsers: { en: 'Total Users', fr: 'Total Utilisateurs', ar: 'إجمالي المستخدمين' },
     backToDashboard: { en: 'Back to Dashboard', fr: 'Retour au Tableau de bord', ar: 'العودة إلى لوحة القيادة' },
     userManagement: { en: 'User Management', fr: 'Gestion Utilisateurs', ar: 'إدارة المستخدمين' },
@@ -174,7 +177,7 @@ const translationStrings = {
 
     // PWA
     pwaBannerTitle: { en: 'Install KoinCLICK', fr: 'Installer KoinCLICK', ar: 'تثبيت KoinCLICK' },
-    pwaAndroidInstructions: { en: 'Get a native experience and offline access.', fr: 'Accès hors ligne et expérience native.', ar: 'احصل على تجربة أصلية ووصول بدون إنترنت.' },
+    pwaAndroidInstructions: { en: 'Get the native Android experience. Tap "Install" to add to your home screen.', fr: 'Obtenez l\'expérience Android native. Appuyez sur "Installer" pour ajouter à l\'écran d\'accueil.', ar: 'احصل على تجربة Android الأصلية. انقر فوق "تثبيت" للإضافة إلى شاشتك الرئيسية.' },
     pwaIOSInstructions: { en: 'Tap Share and then "Add to Home Screen".', fr: 'Appuyez sur Partager puis "Sur l\'écran d\'accueil".', ar: 'اضغط على مشاركة ثم "إضافة إلى الشاشة الرئيسية".' },
 
     // Categories

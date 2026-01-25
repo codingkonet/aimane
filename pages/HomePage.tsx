@@ -5,7 +5,6 @@ import { LanguageContext } from '../context/LanguageContext';
 import Footer from '../components/Footer';
 import LoginForm from '../components/LoginForm';
 import { User } from '../types';
-import { TranslationKey } from '../translations';
 
 interface HomePageProps {
     onInstall: () => void;
@@ -46,26 +45,25 @@ const StepItem: React.FC<{ number: string, title: string, desc: string }> = ({ n
 const CheckIconMini = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>;
 
 const PlanCard: React.FC<{
-    titleKey: TranslationKey; // Changed from title: string
+    title: string;
     price: string;
-    descKey: TranslationKey; // Changed from desc: string
+    desc: string;
     features: string[];
     ctaText: string;
     ctaLink: string;
     isRecommended?: boolean;
-    t: (key: TranslationKey) => string; // Ensure t prop is correctly typed
-}> = ({ titleKey, price, descKey, features, ctaText, ctaLink, isRecommended, t }) => (
+}> = ({ title, price, desc, features, ctaText, ctaLink, isRecommended }) => (
     <div className={`relative bg-white dark:bg-slate-800 p-8 rounded-3xl border ${isRecommended ? 'border-primary shadow-2xl shadow-primary/20' : 'border-slate-200 dark:border-slate-700 shadow-lg'} flex flex-col`}>
         {isRecommended && (
             <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
-                {t('recommended')}
+                Recommended
             </div>
         )}
-        <h3 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100">{t(titleKey)}</h3> {/* Use t(titleKey) */}
-        <p className="text-center text-slate-500 dark:text-slate-400 mt-2">{t(descKey)}</p> {/* Use t(descKey) */}
+        <h3 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100">{title}</h3>
+        <p className="text-center text-slate-500 dark:text-slate-400 mt-2">{desc}</p>
         <div className="my-8 text-center">
             <span className="text-5xl font-black text-slate-900 dark:text-white">{price}</span>
-            <span className="text-slate-500 dark:text-slate-400">{t('perMonth')}</span> {/* Use t('perMonth') */}
+            <span className="text-slate-500 dark:text-slate-400">/ month</span>
         </div>
         <ul className="space-y-4 mb-10 flex-grow">
             {features.map((feature, i) => (
@@ -148,7 +146,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                                     onClick={onInstall}
                                     className="w-full flex items-center justify-center gap-3 bg-secondary text-white py-4 rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-secondary/20 active:scale-95"
                                 >
-                                    <DesktopIcon /> {t('installWebApp')}
+                                    <AndroidIcon /> {t('downloadForAndroid')}
                                 </button>
                             </>
                         )}
@@ -195,19 +193,17 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         <PlanCard
-                            t={t}
-                            titleKey="freePlanTitle" // Changed to titleKey
+                            title={t('freePlanTitle')}
                             price={t('freePlanPrice')}
-                            descKey="freePlanDesc" // Changed to descKey
+                            desc={t('freePlanDesc')}
                             features={freeFeatures}
                             ctaText={t('ctaGetStartedFree')}
                             ctaLink="#/register"
                         />
                         <PlanCard
-                            t={t}
-                            titleKey="proPlanName" // Changed to titleKey and using new translation key
+                            title="Pro"
                             price={t('proPlanPrice')}
-                            descKey="proPlanDesc" // Changed to descKey
+                            desc={t('proPlanDesc')}
                             features={proFeatures}
                             ctaText={t('ctaUpgradePro')}
                             ctaLink="#/register"
@@ -287,7 +283,7 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                             onClick={onInstall}
                             className="w-full sm:w-auto bg-primary text-white font-bold py-4 px-10 rounded-2xl text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 flex items-center justify-center gap-3"
                         >
-                           <DesktopIcon /> {t('installWebApp')}
+                           <AndroidIcon /> {t('downloadForAndroid')}
                         </button>
                     )}
                 </div>
@@ -302,8 +298,8 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
 // SVG Icons
 const ChartBarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>;
 const GlobeAltIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9" /></svg>;
-const MoonIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>;
-const DevicePhoneMobileIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>;
+const MoonIcon = () => <svg xmlns="http://www.w.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>;
+const DevicePhoneMobileIcon = () => <svg xmlns="http://www.w.org/2000/svg" className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>;
 const DownloadCloudIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-primary mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" /></svg>;
 const PiggyBankIconLarge = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-primary/40 mx-auto" viewBox="0 0 24 24" fill="currentColor">
@@ -312,6 +308,11 @@ const PiggyBankIconLarge = () => (
 );
 const DesktopIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+);
+const AndroidIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997M6.4769 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997M18.4334 18.7915v3.2085c0 .5511-.4486.9997-.9997.9997-.5511 0-.9993-.4486-.9993-.9997v-3.11c-1.0772.3025-2.222.4777-3.4344.4777-1.2125 0-2.3572-.1752-3.4344-.4777v3.11c0 .5511-.4482.9997-.9993.9997-.5511 0-.9997-.4486-.9997-.9997v-3.2085c-2.2965-.9606-3.9555-3.1368-4.0853-5.7412h18.037c-.1294 2.6044-1.7884 4.7806-4.0849 5.7412M18.0374 7.5029c.1429-1.2146-.3885-2.3918-1.309-3.0063l1.3533-2.344c.1622-.2791.0664-.637-.2127-.7992-.2791-.1622-.637-.0664-.7992.2127l-1.3783 2.3853C14.153 3.1977 12.609 2.84 10.966 2.84c-1.643 0-3.187.3577-4.596.9942L4.9917.8488c-.1622-.2791-.5201-.3749-.7992-.2127-.2791.1622-.3749.5201-.2127.7992l1.3533 2.344c-.9205.6145-1.4519 1.7917-1.309 3.0063H2.8872v4.5448h18.2252V7.5029h-3.075z" />
+    </svg>
 );
 
 

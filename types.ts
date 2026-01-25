@@ -73,6 +73,7 @@ export interface PlatformSettings {
   proPrice: number;
   stripeEnabled: boolean;
   paypalEnabled: boolean;
+  paypalEmail: string;
 }
 
 export interface IncomeSource {

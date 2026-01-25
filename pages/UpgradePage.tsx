@@ -23,7 +23,7 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
   const price = settings.proPrice;
   const currency = user.currency;
   const itemName = "KoinCLICK Pro Subscription";
-  const paypalEmail = "hello@ouaglabs.com";
+  const paypalEmail = settings.paypalEmail || "hello@ouaglabs.com";
   
   const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&currency_code=${currency}&amount=${price}&item_name=${encodeURIComponent(itemName)}&custom=${user.email}`;
 

@@ -152,6 +152,18 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, users, on
                                 <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${settings.paypalEnabled ? 'right-1' : 'left-1'}`} />
                             </button>
                         </div>
+                        {settings.paypalEnabled && (
+                            <div>
+                                <label className="block text-sm font-bold text-slate-500 mb-2">{t('paypalEmailLabel')}</label>
+                                <input 
+                                    type="email" 
+                                    value={settings.paypalEmail} 
+                                    onChange={e => onUpdateSettings({...settings, paypalEmail: e.target.value})}
+                                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:text-white"
+                                    placeholder="your-paypal-business@email.com"
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

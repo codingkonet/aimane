@@ -25,8 +25,9 @@ interface BeforeInstallPromptEvent extends Event {
 
 const DEFAULT_SETTINGS: PlatformSettings = {
     proPrice: 5,
-    stripeEnabled: true,
-    paypalEnabled: true
+    stripeEnabled: false,
+    paypalEnabled: true,
+    paypalEmail: "hello@ouaglabs.com"
 };
 
 const App: React.FC = () => {
