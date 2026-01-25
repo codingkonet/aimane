@@ -279,19 +279,21 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
         </div>
 
         <div className="mt-8">
-          <TransactionFilter 
-            selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}
-            startDate={startDate} setStartDate={setStartDate}
-            endDate={endDate} setEndDate={setEndDate}
-            handleReset={() => {setSearchTerm(''); setSelectedCategory('all'); setStartDate(''); setEndDate('');}}
-          />
+          {isPro && (
+            <TransactionFilter 
+              selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}
+              startDate={startDate} setStartDate={setStartDate}
+              endDate={endDate} setEndDate={setEndDate}
+              handleReset={() => {setSearchTerm(''); setSelectedCategory('all'); setStartDate(''); setEndDate('');}}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+            />
+          )}
           <TransactionList 
             transactions={filteredTransactions} 
             onDeleteTransaction={deleteTransaction}
             currency={user.currency}
             isFiltered={!!searchTerm || selectedCategory !== 'all' || !!startDate || !!endDate}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
             onImportClick={handleImportClick}
             onExportPDF={handleExportPDF}
             onExportExcel={handleExportExcel}

@@ -9,8 +9,6 @@ interface TransactionListProps {
   onDeleteTransaction: (id: string) => void;
   currency: Currency;
   isFiltered: boolean;
-  searchTerm: string;
-  setSearchTerm: (value: string) => void;
   onImportClick: () => void;
   onExportPDF: () => void;
   onExportExcel: () => void;
@@ -19,12 +17,6 @@ interface TransactionListProps {
 const TrashIcon: React.FC<{className?: string}> = ({className}) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-    </svg>
-);
-
-const SearchIcon: React.FC<{className?: string}> = ({className}) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
     </svg>
 );
 
@@ -79,7 +71,7 @@ const TransactionItem: React.FC<{transaction: Transaction; currency: Currency; o
 };
 
 const TransactionList: React.FC<TransactionListProps> = ({
-    transactions, onDeleteTransaction, currency, isFiltered, searchTerm, setSearchTerm, onImportClick, onExportPDF, onExportExcel
+    transactions, onDeleteTransaction, currency, isFiltered, onImportClick, onExportPDF, onExportExcel
 }) => {
     const { t } = useContext(LanguageContext);
     const [isExportOpen, setIsExportOpen] = useState(false);
@@ -96,20 +88,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
     }, []);
 
     return (
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg mt-8">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
             <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200">{t('recentTransactions')}</h2>
                 <div className="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
-                    <div className="relative flex-grow md:flex-grow-0">
-                        <input
-                            type="text"
-                            placeholder={t('searchPlaceholder')}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full md:w-64 pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white"
-                        />
-                        <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                    </div>
                     <button onClick={onImportClick} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2 px-4 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition flex items-center gap-2">
                         <UploadIcon className="w-5 h-5" /> {t('import')}
                     </button>
