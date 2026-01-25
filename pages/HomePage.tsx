@@ -5,6 +5,7 @@ import { LanguageContext } from '../context/LanguageContext';
 import Footer from '../components/Footer';
 import LoginForm from '../components/LoginForm';
 import { User } from '../types';
+import { TranslationKey } from '../translations';
 
 interface HomePageProps {
     onInstall: () => void;
@@ -45,26 +46,26 @@ const StepItem: React.FC<{ number: string, title: string, desc: string }> = ({ n
 const CheckIconMini = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>;
 
 const PlanCard: React.FC<{
-    title: string;
+    titleKey: TranslationKey; // Changed from title: string
     price: string;
-    desc: string;
+    descKey: TranslationKey; // Changed from desc: string
     features: string[];
     ctaText: string;
     ctaLink: string;
     isRecommended?: boolean;
-    t: (key: any) => string;
-}> = ({ title, price, desc, features, ctaText, ctaLink, isRecommended, t }) => (
+    t: (key: TranslationKey) => string; // Ensure t prop is correctly typed
+}> = ({ titleKey, price, descKey, features, ctaText, ctaLink, isRecommended, t }) => (
     <div className={`relative bg-white dark:bg-slate-800 p-8 rounded-3xl border ${isRecommended ? 'border-primary shadow-2xl shadow-primary/20' : 'border-slate-200 dark:border-slate-700 shadow-lg'} flex flex-col`}>
         {isRecommended && (
             <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
                 {t('recommended')}
             </div>
         )}
-        <h3 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100">{title}</h3>
-        <p className="text-center text-slate-500 dark:text-slate-400 mt-2">{desc}</p>
+        <h3 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100">{t(titleKey)}</h3> {/* Use t(titleKey) */}
+        <p className="text-center text-slate-500 dark:text-slate-400 mt-2">{t(descKey)}</p> {/* Use t(descKey) */}
         <div className="my-8 text-center">
             <span className="text-5xl font-black text-slate-900 dark:text-white">{price}</span>
-            <span className="text-slate-500 dark:text-slate-400">/ month</span>
+            <span className="text-slate-500 dark:text-slate-400">{t('perMonth')}</span> {/* Use t('perMonth') */}
         </div>
         <ul className="space-y-4 mb-10 flex-grow">
             {features.map((feature, i) => (
@@ -195,18 +196,18 @@ const HomePage: React.FC<HomePageProps> = ({ onInstall, showInstallButton, users
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         <PlanCard
                             t={t}
-                            title={t('freePlanTitle')}
+                            titleKey="freePlanTitle" // Changed to titleKey
                             price={t('freePlanPrice')}
-                            desc={t('freePlanDesc')}
+                            descKey="freePlanDesc" // Changed to descKey
                             features={freeFeatures}
                             ctaText={t('ctaGetStartedFree')}
                             ctaLink="#/register"
                         />
                         <PlanCard
                             t={t}
-                            title="Pro"
+                            titleKey="proPlanName" // Changed to titleKey and using new translation key
                             price={t('proPlanPrice')}
-                            desc={t('proPlanDesc')}
+                            descKey="proPlanDesc" // Changed to descKey
                             features={proFeatures}
                             ctaText={t('ctaUpgradePro')}
                             ctaLink="#/register"

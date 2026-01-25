@@ -51,6 +51,7 @@ const translationStrings = {
     freePlanTitle: { en: 'Free', fr: 'Gratuit', ar: 'مجاني' },
     freePlanPrice: { en: '$0', fr: '0€', ar: '0 د.م' },
     freePlanDesc: { en: 'For individuals starting their budgeting journey.', fr: 'Pour les particuliers qui commencent leur parcours budgétaire.', ar: 'للأفراد الذين يبدأون رحلتهم في الميزانية.' },
+    proPlanName: { en: 'Pro', fr: 'Pro', ar: 'Pro' }, // Added for plan card title
     proPlanPrice: { en: '$5', fr: '5€', ar: '50 د.م' },
     proPlanDesc: { en: 'For power users who want advanced features.', fr: 'Pour les utilisateurs avancés qui veulent des fonctionnalités de pointe.', ar: 'للمستخدمين المتميزين الذين يريدون ميزات متقدمة.' },
     ctaGetStartedFree: { en: 'Get Started for Free', fr: 'Commencer Gratuitement', ar: 'ابدأ مجانًا' },
@@ -74,7 +75,7 @@ const translationStrings = {
     upgradeToPro: { en: 'Upgrade to Pro', fr: 'Passer au Pro', ar: 'الترقية إلى Pro' },
     goPro: { en: 'Go Pro', fr: 'Devenir Pro', ar: 'كن Pro' },
     proFeatures: { en: 'Pro Features', fr: 'Fonctionnalités Pro', ar: 'ميزات Pro' },
-    aiAdvisor: { en: 'AI Financial Advisor', fr: 'Conseiller Financier IA', ar: 'مستشار مالي بالذكاء الاصطناعي' },
+    aiAdvisor: { en: 'AI Financial Advisor', fr: 'Conseiller Financier IA', ar: 'مستشار مالي بالذكاء الاصilني' },
     aiSuggestedCategory: { en: 'Category suggested by AI', fr: 'Catégorie suggérée par l\'IA', ar: 'الفئة المقترحة بواسطة الذكاء الاصطناعي' },
     getAdvisorTips: { en: 'Get AI insights on your spending habits.', fr: 'Obtenez des conseils IA sur vos habitudes.', ar: 'احصل على رؤى الذكاء الاصطناعي حول عاداتك.' },
     addMoreTransactionsForAdvice: { en: 'Add at least 3 transactions to get personalized advice.', fr: 'Ajoutez au moins 3 transactions pour des conseils personnalisés.', ar: 'أضف 3 معاملات على الأقل للحصول على نصائح شخصية.' },

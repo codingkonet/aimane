@@ -238,6 +238,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
                 <button onClick={() => window.location.hash = '/blog'} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2 px-5 rounded-2xl hover:bg-slate-200 transition-all active:scale-95 flex items-center gap-2">
                      {t('community')}
                 </button>
+                {showInstallButton && (
+                    <button onClick={onInstall} className="bg-secondary text-white font-bold py-2 px-5 rounded-2xl hover:bg-emerald-600 transition-all shadow-lg active:scale-95 flex items-center gap-2">
+                         <DownloadIcon /> {t('installApp')}
+                    </button>
+                )}
             </div>
             
             {/* AI Advisor Card (Pro Only) */}
@@ -324,6 +329,12 @@ const RefreshIcon = ({size=24}) => (
 
 const LoadingSpinner = ({size=24}) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+);
+
+const DownloadIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
 );
 
 export default DashboardPage;
