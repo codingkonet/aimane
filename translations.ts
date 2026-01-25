@@ -152,6 +152,14 @@ const translationStrings = {
     convertButton: { en: 'Convert', fr: 'Convertir', ar: 'تحويل' },
     convertedAmount: { en: 'Converted Amount', fr: 'Montant converti', ar: 'المبلغ المحول' },
 
+    // Income Sources (Pro)
+    incomeSourcesTitle: { en: 'Income Sources', fr: 'Sources de Revenus', ar: 'مصادر الدخل' },
+    addSource: { en: 'Add Source', fr: 'Ajouter Source', ar: 'إضافة مصدر' },
+    updateSource: { en: 'Update Source', fr: 'Mettre à jour', ar: 'تحديث المصدر' },
+    sourceName: { en: 'Source Name', fr: 'Nom de la source', ar: 'اسم المصدر' },
+    expectedAmount: { en: 'Expected Amount', fr: 'Montant Attendu', ar: 'المبلغ المتوقع' },
+    noIncomeSources: { en: 'No income sources added yet. Add one to start tracking!', fr: 'Aucune source de revenus. Ajoutez-en une pour commencer!', ar: 'لم تتم إضافة مصادر دخل بعد. أضف واحدة لبدء التتبع!' },
+
     // Blog
     createPost: { en: 'Create Post', fr: 'Créer un article', ar: 'إنشاء منشور' },
     backToBlog: { en: 'Back to Community', fr: 'Retour à la communauté', ar: 'العودة للمجتمع' },

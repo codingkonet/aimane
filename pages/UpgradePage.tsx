@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { User, PlatformSettings } from '../types';
 import Header from '../components/Header';
 import { LanguageContext } from '../context/LanguageContext';
@@ -19,6 +19,7 @@ const CheckIcon = () => (
 
 const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings }) => {
   const { t } = useContext(LanguageContext);
+  const [isProcessing, setIsProcessing] = useState(false);
   
   const price = settings.proPrice;
   const currency = user.currency;
@@ -27,6 +28,36 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
   
   const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&currency_code=${currency}&amount=${price}&item_name=${encodeURIComponent(itemName)}&custom=${user.email}`;
 
+  const handleStripePayment = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsProcessing(true);
+    setTimeout(() => {
+        setIsProcessing(false);
+        onUpdateUser({ ...user, plan: 'Pro' });
+        alert(t('paymentSuccess'));
+    }, 2000);
+  };
+
+  if (user.plan === 'Pro') {
+    return (
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
+          <Header user={user} />
+          <main className="flex-grow container mx-auto p-4 md:p-8 flex items-center justify-center">
+            <div className="max-w-md w-full text-center bg-white dark:bg-slate-800 p-12 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700">
+                <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckIconLarge />
+                </div>
+                <h1 className="text-3xl font-black text-slate-900 dark:text-white">{t('paymentSuccess')}</h1>
+                <p className="text-slate-500 dark:text-slate-400 mt-4">You now have access to all Pro features. Enjoy!</p>
+                <button onClick={() => window.location.hash = '/dashboard'} className="mt-8 bg-primary text-white font-bold py-3 px-8 rounded-2xl hover:bg-indigo-700 transition-all shadow-xl shadow-primary/20 active:scale-95">
+                    Go to Dashboard
+                </button>
+            </div>
+          </main>
+          <Footer />
+        </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
@@ -44,10 +75,10 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
                 </p>
                 <ul className="space-y-4">
                     {[
-                        'AI Financial Advisor (Gemini powered)',
-                        'Unlimited Detailed Analytics',
-                        'Multi-Currency Real-time Converter',
-                        'Priority Community Support',
+                        t('featureAiAdvisor'),
+                        t('featureUnlimitedAnalytics'),
+                        t('featureRealtimeConverter'),
+                        t('featurePrioritySupport'),
                         'Dark & Light Mode Included',
                         'No Ads, Ever'
                     ].map((feature, i) => (
@@ -71,28 +102,58 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
                 </div>
 
                 <div className="p-8 space-y-6">
-                    <p className="text-center text-slate-600 dark:text-slate-400 text-sm">
-                        {t('upgradeManualInstructions')}
-                    </p>
+                    
+                    {settings.stripeEnabled && (
+                        <form onSubmit={handleStripePayment} className="space-y-4">
+                             <div className="space-y-2">
+                                <label className="text-xs font-bold text-slate-500 uppercase">{t('cardNumber')}</label>
+                                <input type="text" placeholder="**** **** **** ****" required className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all"/>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="space-y-2 flex-1">
+                                    <label className="text-xs font-bold text-slate-500 uppercase">{t('expiry')}</label>
+                                    <input type="text" placeholder="MM/YY" required className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all"/>
+                                </div>
+                                <div className="space-y-2 flex-1">
+                                    <label className="text-xs font-bold text-slate-500 uppercase">{t('cvc')}</label>
+                                    <input type="text" placeholder="CVC" required className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all"/>
+                                </div>
+                            </div>
+                            <button type="submit" disabled={isProcessing} className="w-full flex items-center justify-center gap-3 bg-slate-800 dark:bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-700 transition-all shadow-lg active:scale-95 disabled:opacity-50">
+                                <CardIcon /> {isProcessing ? t('processing') : t('payWithStripe')}
+                            </button>
+                        </form>
+                    )}
 
-                    {settings.paypalEnabled ? (
-                        <a
-                            href={paypalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-3 bg-[#ffc439] text-[#003087] py-4 rounded-2xl font-bold hover:bg-[#f4bb30] transition-all shadow-lg active:scale-95"
-                        >
-                            <PaypalLogo /> {t('payWithPaypal')}
-                        </a>
-                    ) : (
+                    {settings.stripeEnabled && settings.paypalEnabled && (
+                        <div className="flex items-center">
+                            <div className="flex-grow border-t border-slate-200 dark:border-slate-600"></div>
+                            <span className="flex-shrink mx-4 text-xs font-bold uppercase text-slate-400">OR</span>
+                            <div className="flex-grow border-t border-slate-200 dark:border-slate-600"></div>
+                        </div>
+                    )}
+                    
+                    {settings.paypalEnabled && (
+                        <div>
+                            <a
+                                href={paypalUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-3 bg-[#ffc439] text-[#003087] py-4 rounded-2xl font-bold hover:bg-[#f4bb30] transition-all shadow-lg active:scale-95"
+                            >
+                                <PaypalLogo /> {t('payWithPaypal')}
+                            </a>
+                             <p className="text-center text-slate-600 dark:text-slate-400 text-xs mt-4">
+                                {t('upgradeManualInstructions')}
+                             </p>
+                        </div>
+                    )}
+                    
+                    {!settings.stripeEnabled && !settings.paypalEnabled && (
                         <div className="text-center p-4 bg-slate-100 dark:bg-slate-700 rounded-xl text-slate-600 dark:text-slate-300">
                             Online payments are currently disabled. Please contact support to upgrade.
                         </div>
                     )}
-                    
-                    <p className="text-center text-xs text-slate-500 dark:text-slate-400">
-                        {t('contactSupport')}
-                    </p>
                 </div>
             </div>
         </div>
@@ -106,6 +167,18 @@ const PaypalLogo = ({size=24}: any) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.076 21.337H2.47L5.411 2.663h7.245c3.55 0 5.487 1.706 5.487 4.293 0 1.24-.316 2.361-1.01 3.267-1.123 1.47-3.044 2.277-5.524 2.277H8.562L7.076 21.337z" fill="#253B80"/>
         <path d="M10.748 13.911h-2.18l-1.486 8.74h4.606l1.487-8.74h-2.427z" fill="#179BD7"/>
+    </svg>
+);
+
+const CardIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+    </svg>
+);
+
+const CheckIconLarge = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 

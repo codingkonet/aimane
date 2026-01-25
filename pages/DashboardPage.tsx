@@ -10,6 +10,7 @@ import TransactionList from '../components/TransactionList';
 import BudgetChart from '../components/BudgetChart';
 import TransactionFilter from '../components/TransactionFilter';
 import CurrencyConverter from '../components/CurrencyConverter';
+import IncomeSourceManager from '../components/IncomeSourceManager';
 import { LanguageContext } from '../context/LanguageContext';
 import { GoogleGenAI } from "@google/genai";
 import { formatCurrency } from '../utils/formatting';
@@ -269,6 +270,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, onLogout, onUpdateU
             <BudgetTracker totalExpenses={totalExpenses} budget={budget} setBudget={setBudget} currency={user.currency}/>
             <TransactionForm onAddTransaction={addTransaction} isPro={isPro} />
             <CurrencyConverter balance={balance} baseCurrency={user.currency} />
+            {isPro && <IncomeSourceManager user={user} />}
           </div>
           <div className="lg:col-span-3">
              <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl h-full border border-slate-100 dark:border-slate-700">

@@ -74,3 +74,10 @@ export interface PlatformSettings {
   stripeEnabled: boolean;
   paypalEnabled: boolean;
 }
+
+export interface IncomeSource {
+  id: string;
+  name: string;
+  amount: number;
+  category: Category;
+}

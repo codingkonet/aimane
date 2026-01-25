@@ -31,20 +31,27 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
 
     return (
         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg mb-8">
-            <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-4">{t('filters')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Search Input */}
-                <div className="relative">
-                    <input
-                        type="text"
-                        placeholder={t('searchPlaceholder')}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white"
-                    />
-                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                </div>
+            {/* Search Bar - now more prominent */}
+            <div className="relative mb-6">
+                <input
+                    type="text"
+                    placeholder={t('searchPlaceholder')}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white text-lg shadow-sm"
+                    aria-label="Search transactions"
+                />
+                <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" />
+            </div>
 
+            {/* Advanced Filters */}
+            <div className="flex items-center mb-4">
+                <div className="flex-grow border-t border-slate-200 dark:border-slate-600"></div>
+                <span className="flex-shrink mx-4 text-xs font-bold uppercase text-slate-400">{t('filters')}</span>
+                <div className="flex-grow border-t border-slate-200 dark:border-slate-600"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Category Select */}
                 <select
                     value={selectedCategory}
