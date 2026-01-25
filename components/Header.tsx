@@ -30,7 +30,11 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onUpdateUser, onInstall
   const { language, setLanguage, t } = useContext(LanguageContext);
   
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLanguage(e.target.value as Language);
+    const newLang = e.target.value as Language;
+    setLanguage(newLang);
+    if (user && onUpdateUser) {
+        onUpdateUser({ ...user, language: newLang });
+    }
   }
   
   const handleThemeToggle = () => {

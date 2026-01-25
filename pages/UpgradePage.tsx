@@ -19,7 +19,6 @@ const CheckIcon = () => (
 
 const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings }) => {
   const { t } = useContext(LanguageContext);
-  const [isProcessing, setIsProcessing] = useState(false);
   
   const price = settings.proPrice;
   const currency = user.currency;
@@ -27,16 +26,6 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
   const paypalEmail = "hello@ouaglabs.com";
   
   const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&currency_code=${currency}&amount=${price}&item_name=${encodeURIComponent(itemName)}&custom=${user.email}`;
-
-  const handleStripePayment = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
-    setTimeout(() => {
-        setIsProcessing(false);
-        onUpdateUser({ ...user, plan: 'Pro' });
-        alert(t('paymentSuccess'));
-    }, 2000);
-  };
 
   if (user.plan === 'Pro') {
     return (
@@ -103,36 +92,6 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
 
                 <div className="p-8 space-y-6">
                     
-                    {settings.stripeEnabled && (
-                        <form onSubmit={handleStripePayment} className="space-y-4">
-                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-slate-500 uppercase">{t('cardNumber')}</label>
-                                <input type="text" placeholder="**** **** **** ****" required className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all"/>
-                            </div>
-                            <div className="flex gap-4">
-                                <div className="space-y-2 flex-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase">{t('expiry')}</label>
-                                    <input type="text" placeholder="MM/YY" required className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all"/>
-                                </div>
-                                <div className="space-y-2 flex-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase">{t('cvc')}</label>
-                                    <input type="text" placeholder="CVC" required className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white transition-all"/>
-                                </div>
-                            </div>
-                            <button type="submit" disabled={isProcessing} className="w-full flex items-center justify-center gap-3 bg-slate-800 dark:bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-700 transition-all shadow-lg active:scale-95 disabled:opacity-50">
-                                <CardIcon /> {isProcessing ? t('processing') : t('payWithStripe')}
-                            </button>
-                        </form>
-                    )}
-
-                    {settings.stripeEnabled && settings.paypalEnabled && (
-                        <div className="flex items-center">
-                            <div className="flex-grow border-t border-slate-200 dark:border-slate-600"></div>
-                            <span className="flex-shrink mx-4 text-xs font-bold uppercase text-slate-400">OR</span>
-                            <div className="flex-grow border-t border-slate-200 dark:border-slate-600"></div>
-                        </div>
-                    )}
-                    
                     {settings.paypalEnabled && (
                         <div>
                             <a
@@ -149,7 +108,7 @@ const UpgradePage: React.FC<UpgradePageProps> = ({ user, onUpdateUser, settings 
                         </div>
                     )}
                     
-                    {!settings.stripeEnabled && !settings.paypalEnabled && (
+                    {!settings.paypalEnabled && (
                         <div className="text-center p-4 bg-slate-100 dark:bg-slate-700 rounded-xl text-slate-600 dark:text-slate-300">
                             Online payments are currently disabled. Please contact support to upgrade.
                         </div>
@@ -167,12 +126,6 @@ const PaypalLogo = ({size=24}: any) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.076 21.337H2.47L5.411 2.663h7.245c3.55 0 5.487 1.706 5.487 4.293 0 1.24-.316 2.361-1.01 3.267-1.123 1.47-3.044 2.277-5.524 2.277H8.562L7.076 21.337z" fill="#253B80"/>
         <path d="M10.748 13.911h-2.18l-1.486 8.74h4.606l1.487-8.74h-2.427z" fill="#179BD7"/>
-    </svg>
-);
-
-const CardIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
     </svg>
 );
 

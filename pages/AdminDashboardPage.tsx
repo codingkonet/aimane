@@ -144,15 +144,6 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, users, on
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">{t('paymentGateways')}</h3>
                     <div className="space-y-6">
                         <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl">
-                            <div className="font-bold text-slate-700 dark:text-slate-200">Stripe</div>
-                            <button 
-                                onClick={() => onUpdateSettings({...settings, stripeEnabled: !settings.stripeEnabled})}
-                                className={`w-12 h-6 rounded-full transition-all relative ${settings.stripeEnabled ? 'bg-primary' : 'bg-slate-300'}`}
-                            >
-                                <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${settings.stripeEnabled ? 'right-1' : 'left-1'}`} />
-                            </button>
-                        </div>
-                        <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl">
                             <div className="font-bold text-slate-700 dark:text-slate-200">PayPal</div>
                             <button 
                                 onClick={() => onUpdateSettings({...settings, paypalEnabled: !settings.paypalEnabled})}

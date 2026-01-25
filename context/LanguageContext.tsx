@@ -1,5 +1,5 @@
 
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
 import { translations, TranslationKey } from '../translations';
 import { Language } from '../types';
 
@@ -16,19 +16,19 @@ export const LanguageContext = createContext<LanguageContextType>({
 });
 
 export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {
-    const [language, setLanguage] = useState<Language>('en');
+    const [language, setLanguageState] = useState<Language>('en');
 
     useEffect(() => {
         const storedLang = localStorage.getItem('language') as Language;
         if (storedLang && ['en', 'fr', 'ar'].includes(storedLang)) {
-            setLanguage(storedLang);
+            setLanguageState(storedLang);
         }
     }, []);
 
-    const handleSetLanguage = (lang: Language) => {
-        setLanguage(lang);
+    const handleSetLanguage = useCallback((lang: Language) => {
+        setLanguageState(lang);
         localStorage.setItem('language', lang);
-    }
+    }, []);
     
     useEffect(() => {
         document.documentElement.lang = language;
@@ -36,13 +36,19 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
     }, [language]);
 
 
-    const t = (key: TranslationKey): string => {
+    const t = useCallback((key: TranslationKey): string => {
         const translation = translations[language][key] || translations['en'][key];
         return translation || `[${key}]`;
-    };
+    }, [language]);
+
+    const value = useMemo(() => ({
+        language,
+        setLanguage: handleSetLanguage,
+        t
+    }), [language, handleSetLanguage, t]);
 
     return (
-        <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+        <LanguageContext.Provider value={value}>
             {children}
         </LanguageContext.Provider>
     );
